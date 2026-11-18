@@ -1,0 +1,108 @@
+{
+  "benchmark": "Point2Roof synthetic held-out test; Koor evaluation protocol",
+  "checkpoint": "best.pt",
+  "checkpoint_sha256": "1e377d97ccc5cbb2bf8b717e23327c96446f301a580078819985d62ed43a42ed",
+  "checkpoint_epoch": 29,
+  "test_list": "test.txt",
+  "test_list_sha256": "a8bd9b41cdb6211f92701d529313962034870f7e382d13896df14bf0410f8c9f",
+  "samples": 1600,
+  "seed": 42,
+  "preprocessing": {
+    "points": 1024,
+    "normalization": "full-cloud bbox center; max XYZ span; +0.5",
+    "training_noise_sigma": 0.005
+  },
+  "protocol": {
+    "model_mode": "eval; target-free inference",
+    "vertex_matching": "minimum-total-distance Hungarian assignment, then tolerance cutoff",
+    "edge_matching": "both endpoints must match a ground-truth edge; undirected",
+    "tolerance_units": "fraction of full-cloud maximum XYZ bounding-box span",
+    "edge_threshold": 0.5,
+    "corner_score_threshold": 0.5,
+    "assignment_error": "mean over all assigned corners, including those outside tolerance; unmatched corners omitted",
+    "published_protocol_reproduction": false
+  },
+  "metrics_by_tolerance": {
+    "0.01": {
+      "vertex": {
+        "tp": 7111,
+        "predicted": 11813,
+        "truth": 12400,
+        "precision": 0.6019639380343689,
+        "recall": 0.5734677419354839,
+        "f1": 0.5873704208483046,
+        "macro_f1": 0.6096951590377288
+      },
+      "edge": {
+        "tp": 6679,
+        "predicted": 15751,
+        "truth": 17000,
+        "precision": 0.4240365691067234,
+        "recall": 0.39288235294117646,
+        "f1": 0.40786540868981097,
+        "macro_f1": 0.4332234804862246
+      },
+      "mean_assigned_corner_error_normalized": 0.01112984465267948,
+      "assigned_corner_count": 11784
+    },
+    "0.02": {
+      "vertex": {
+        "tp": 10764,
+        "predicted": 11813,
+        "truth": 12400,
+        "precision": 0.9111995259459917,
+        "recall": 0.8680645161290322,
+        "f1": 0.8891091562383844,
+        "macro_f1": 0.9052405304552466
+      },
+      "edge": {
+        "tp": 13710,
+        "predicted": 15751,
+        "truth": 17000,
+        "precision": 0.870420925655514,
+        "recall": 0.8064705882352942,
+        "f1": 0.8372263442337639,
+        "macro_f1": 0.856222724418326
+      },
+      "mean_assigned_corner_error_normalized": 0.01112984465267948,
+      "assigned_corner_count": 11784
+    },
+    "0.05": {
+      "vertex": {
+        "tp": 11560,
+        "predicted": 11813,
+        "truth": 12400,
+        "precision": 0.9785829171252011,
+        "recall": 0.932258064516129,
+        "f1": 0.9548589600627762,
+        "macro_f1": 0.9640333743103358
+      },
+      "edge": {
+        "tp": 15466,
+        "predicted": 15751,
+        "truth": 17000,
+        "precision": 0.9819059107358263,
+        "recall": 0.9097647058823529,
+        "f1": 0.9444597111538579,
+        "macro_f1": 0.9471993096614907
+      },
+      "mean_assigned_corner_error_normalized": 0.01112984465267948,
+      "assigned_corner_count": 11784
+    }
+  },
+  "empty_corner_buildings": 0,
+  "empty_edge_buildings": 0,
+  "empty_corner_rate": 0.0,
+  "empty_edge_rate": 0.0,
+  "inference_seconds_excluding_warmup": 40.19631500157993,
+  "inference_buildings_per_second": 39.804643782324604,
+  "timing_scope": "batched GPU inference plus graph postprocessing; excludes input loading and target scoring",
+  "batch_size": 16,
+  "environment": {
+    "torch": "2.14.1+cu132",
+    "cuda": "13.2",
+    "numpy": "1.26.4",
+    "scipy": "1.17.1",
+    "gpu": "NVIDIA B200"
+  }
+}

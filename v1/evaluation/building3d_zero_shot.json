@@ -1,0 +1,108 @@
+{
+  "benchmark": "Building3D Entry-level custom spatial holdout; Koor v1 zero-shot",
+  "checkpoint": "best.pt",
+  "checkpoint_sha256": "1e377d97ccc5cbb2bf8b717e23327c96446f301a580078819985d62ed43a42ed",
+  "checkpoint_epoch": 29,
+  "test_list": "holdout.txt",
+  "test_list_sha256": "5547f8f4ef9ff1f542b383d43950d85e367772975a4a174080a1d4ef821c3bd6",
+  "samples": 561,
+  "seed": 42,
+  "preprocessing": {
+    "points": 1024,
+    "normalization": "full-cloud bbox center; max XYZ span; +0.5",
+    "training_noise_sigma": 0.005
+  },
+  "protocol": {
+    "model_mode": "eval; target-free inference",
+    "vertex_matching": "minimum-total-distance Hungarian assignment, then tolerance cutoff",
+    "edge_matching": "both endpoints must match a ground-truth edge; undirected",
+    "tolerance_units": "fraction of full-cloud maximum XYZ bounding-box span",
+    "edge_threshold": 0.5,
+    "corner_score_threshold": 0.5,
+    "assignment_error": "mean over all assigned corners, including those outside tolerance; unmatched corners omitted",
+    "published_protocol_reproduction": false
+  },
+  "metrics_by_tolerance": {
+    "0.01": {
+      "vertex": {
+        "tp": 14,
+        "predicted": 3322,
+        "truth": 5434,
+        "precision": 0.004214328717639976,
+        "recall": 0.002576370997423629,
+        "f1": 0.0031978072179077205,
+        "macro_f1": 0.0033781637902430602
+      },
+      "edge": {
+        "tp": 0,
+        "predicted": 2930,
+        "truth": 6279,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "macro_f1": 0.0
+      },
+      "mean_assigned_corner_error_normalized": 0.12136421465375621,
+      "assigned_corner_count": 3126
+    },
+    "0.02": {
+      "vertex": {
+        "tp": 93,
+        "predicted": 3322,
+        "truth": 5434,
+        "precision": 0.027995183624322698,
+        "recall": 0.017114464482885536,
+        "f1": 0.021242576518958427,
+        "macro_f1": 0.022824835952676526
+      },
+      "edge": {
+        "tp": 13,
+        "predicted": 2930,
+        "truth": 6279,
+        "precision": 0.004436860068259386,
+        "recall": 0.002070393374741201,
+        "f1": 0.002823325008144207,
+        "macro_f1": 0.0037962464721403594
+      },
+      "mean_assigned_corner_error_normalized": 0.12136421465375621,
+      "assigned_corner_count": 3126
+    },
+    "0.05": {
+      "vertex": {
+        "tp": 775,
+        "predicted": 3322,
+        "truth": 5434,
+        "precision": 0.23329319686935582,
+        "recall": 0.14262053735737945,
+        "f1": 0.17702147099132023,
+        "macro_f1": 0.18575157206745216
+      },
+      "edge": {
+        "tp": 222,
+        "predicted": 2930,
+        "truth": 6279,
+        "precision": 0.0757679180887372,
+        "recall": 0.035355948399426664,
+        "f1": 0.04821370398523184,
+        "macro_f1": 0.05293048850689098
+      },
+      "mean_assigned_corner_error_normalized": 0.12136421465375621,
+      "assigned_corner_count": 3126
+    }
+  },
+  "empty_corner_buildings": 0,
+  "empty_edge_buildings": 37,
+  "empty_corner_rate": 0.0,
+  "empty_edge_rate": 0.0659536541889483,
+  "inference_seconds_excluding_warmup": 14.07216195424553,
+  "inference_buildings_per_second": 39.86594254841901,
+  "timing_scope": "batched GPU inference plus graph postprocessing; excludes input loading and target scoring",
+  "batch_size": 16,
+  "environment": {
+    "torch": "2.14.1+cu132",
+    "cuda": "13.2",
+    "numpy": "1.26.4",
+    "scipy": "1.17.1",
+    "gpu": "NVIDIA B200"
+  }
+}

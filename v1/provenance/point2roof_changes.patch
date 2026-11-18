@@ -1,0 +1,380 @@
+diff --git a/pc_util/src/ball_query.cpp b/pc_util/src/ball_query.cpp
+index af0f643..d448052 100644
+--- a/pc_util/src/ball_query.cpp
++++ b/pc_util/src/ball_query.cpp
+@@ -1,14 +1,12 @@
+ #include <torch/serialize/tensor.h>
+ #include <vector>
+-#include <THC/THC.h>
++#include <torch/extension.h>
+ #include <cuda.h>
+ #include <cuda_runtime_api.h>
+ #include "ball_query_gpu.h"
+ 
+-extern THCState *state;
+-
+ #define CHECK_CUDA(x) do { \
+-	  if (!x.type().is_cuda()) { \
++	  if (!x.is_cuda()) { \
+ 		      fprintf(stderr, "%s must be CUDA tensor at %s:%d\n", #x, __FILE__, __LINE__); \
+ 		      exit(-1); \
+ 		    } \
+@@ -25,9 +23,9 @@ int ball_query_wrapper_fast(int b, int n, int m, float radius, int nsample,
+     at::Tensor new_xyz_tensor, at::Tensor xyz_tensor, at::Tensor idx_tensor) {
+     CHECK_INPUT(new_xyz_tensor);
+     CHECK_INPUT(xyz_tensor);
+-    const float *new_xyz = new_xyz_tensor.data<float>();
+-    const float *xyz = xyz_tensor.data<float>();
+-    int *idx = idx_tensor.data<int>();
++    const float *new_xyz = new_xyz_tensor.data_ptr<float>();
++    const float *xyz = xyz_tensor.data_ptr<float>();
++    int *idx = idx_tensor.data_ptr<int>();
+ 
+     ball_query_kernel_launcher_fast(b, n, m, radius, nsample, new_xyz, xyz, idx);
+     return 1;
+@@ -38,9 +36,9 @@ int ball_center_query_wrapper_fast(int b, int n, int m, float radius,
+     at::Tensor point_tensor, at::Tensor key_point_tensor, at::Tensor idx_tensor) {
+     CHECK_INPUT(point_tensor);
+     CHECK_INPUT(key_point_tensor);
+-    const float *point = point_tensor.data<float>();
+-    const float *key_point = key_point_tensor.data<float>();
+-    int *idx = idx_tensor.data<int>();
++    const float *point = point_tensor.data_ptr<float>();
++    const float *key_point = key_point_tensor.data_ptr<float>();
++    int *idx = idx_tensor.data_ptr<int>();
+ 
+     ball_center_query_kernel_launcher_fast(b, n, m, radius, point, key_point, idx);
+     return 1;
+@@ -51,10 +49,10 @@ int knn_query_wrapper_fast(int b, int n, int m, int nsample,
+     at::Tensor new_xyz_tensor, at::Tensor xyz_tensor, at::Tensor dist2_tensor, at::Tensor idx_tensor) {
+     CHECK_INPUT(new_xyz_tensor);
+     CHECK_INPUT(xyz_tensor);
+-    const float *new_xyz = new_xyz_tensor.data<float>();
+-    const float *xyz = xyz_tensor.data<float>();
+-    float *dist2 = dist2_tensor.data<float>();
+-    int *idx = idx_tensor.data<int>();
++    const float *new_xyz = new_xyz_tensor.data_ptr<float>();
++    const float *xyz = xyz_tensor.data_ptr<float>();
++    float *dist2 = dist2_tensor.data_ptr<float>();
++    int *idx = idx_tensor.data_ptr<int>();
+ 
+     knn_query_kernel_launcher_fast(b, n, m, nsample, new_xyz, xyz, dist2, idx);
+     return 1;
+@@ -69,11 +67,11 @@ int ball_query_wrapper_stack(int B, int M, float radius, int nsample,
+     CHECK_INPUT(new_xyz_batch_cnt_tensor);
+     CHECK_INPUT(xyz_batch_cnt_tensor);
+ 
+-    const float *new_xyz = new_xyz_tensor.data<float>();
+-    const float *xyz = xyz_tensor.data<float>();
+-    const int *new_xyz_batch_cnt = new_xyz_batch_cnt_tensor.data<int>();
+-    const int *xyz_batch_cnt = xyz_batch_cnt_tensor.data<int>();
+-    int *idx = idx_tensor.data<int>();
++    const float *new_xyz = new_xyz_tensor.data_ptr<float>();
++    const float *xyz = xyz_tensor.data_ptr<float>();
++    const int *new_xyz_batch_cnt = new_xyz_batch_cnt_tensor.data_ptr<int>();
++    const int *xyz_batch_cnt = xyz_batch_cnt_tensor.data_ptr<int>();
++    int *idx = idx_tensor.data_ptr<int>();
+ 
+     ball_query_kernel_launcher_stack(B, M, radius, nsample, new_xyz, new_xyz_batch_cnt, xyz, xyz_batch_cnt, idx);
+     return 1;
+diff --git a/pc_util/src/cluster.cpp b/pc_util/src/cluster.cpp
+index c4aa39d..a598fc5 100644
+--- a/pc_util/src/cluster.cpp
++++ b/pc_util/src/cluster.cpp
+@@ -1,14 +1,12 @@
+ #include <torch/serialize/tensor.h>
+ #include <vector>
+-#include <THC/THC.h>
++#include <torch/extension.h>
+ #include <cuda.h>
+ #include <cuda_runtime_api.h>
+ #include "cluster_gpu.h"
+ 
+-extern THCState *state;
+-
+ #define CHECK_CUDA(x) do { \
+-	  if (!x.type().is_cuda()) { \
++	  if (!x.is_cuda()) { \
+ 		      fprintf(stderr, "%s must be CUDA tensor at %s:%d\n", #x, __FILE__, __LINE__); \
+ 		      exit(-1); \
+ 		    } \
+@@ -23,8 +21,8 @@ extern THCState *state;
+ 
+ int dbscan_wrapper_fast(int b, int n, float eps, int min_pts, at::Tensor xyz_tensor, at::Tensor idx_tensor) {
+     CHECK_INPUT(xyz_tensor);
+-    const float *xyz = xyz_tensor.data<float>();
+-    int *idx = idx_tensor.data<int>();
++    const float *xyz = xyz_tensor.data_ptr<float>();
++    int *idx = idx_tensor.data_ptr<int>();
+ 
+     dbscan_kernel_launcher_fast(b, n, eps, min_pts, xyz, idx);
+     return 1;
+@@ -35,10 +33,10 @@ int cluster_pts_wrapper_fast(int b, int n, int m, at::Tensor xyz_tensor, at::Ten
+     at::Tensor new_xyz_tensor, at::Tensor num_tensor) {
+     CHECK_INPUT(xyz_tensor);
+     CHECK_INPUT(idx_tensor);
+-    const float *xyz = xyz_tensor.data<float>();
+-    const int *idx = idx_tensor.data<int>();
+-    float *new_xyz = new_xyz_tensor.data<float>();
+-    int *num = num_tensor.data<int>();
++    const float *xyz = xyz_tensor.data_ptr<float>();
++    const int *idx = idx_tensor.data_ptr<int>();
++    float *new_xyz = new_xyz_tensor.data_ptr<float>();
++    int *num = num_tensor.data_ptr<int>();
+ 
+     cluster_pts_kernel_launcher_fast(b, n, m, xyz, idx, new_xyz, num);
+     return 1;
+diff --git a/pc_util/src/group_points.cpp b/pc_util/src/group_points.cpp
+index dc7f143..d446a3b 100644
+--- a/pc_util/src/group_points.cpp
++++ b/pc_util/src/group_points.cpp
+@@ -2,14 +2,11 @@
+ #include <cuda.h>
+ #include <cuda_runtime_api.h>
+ #include <vector>
+-#include <THC/THC.h>
++#include <torch/extension.h>
+ #include "group_points_gpu.h"
+ 
+-extern THCState *state;
+-
+-
+ #define CHECK_CUDA(x) do { \
+-	  if (!x.type().is_cuda()) { \
++	  if (!x.is_cuda()) { \
+ 		      fprintf(stderr, "%s must be CUDA tensor at %s:%d\n", #x, __FILE__, __LINE__); \
+ 		      exit(-1); \
+ 		    } \
+@@ -27,9 +24,9 @@ extern THCState *state;
+ int group_points_grad_wrapper_fast(int b, int c, int n, int npoints, int nsample, 
+     at::Tensor grad_out_tensor, at::Tensor idx_tensor, at::Tensor grad_points_tensor) {
+ 
+-    float *grad_points = grad_points_tensor.data<float>();
+-    const int *idx = idx_tensor.data<int>();
+-    const float *grad_out = grad_out_tensor.data<float>();
++    float *grad_points = grad_points_tensor.data_ptr<float>();
++    const int *idx = idx_tensor.data_ptr<int>();
++    const float *grad_out = grad_out_tensor.data_ptr<float>();
+ 
+     group_points_grad_kernel_launcher_fast(b, c, n, npoints, nsample, grad_out, idx, grad_points);
+     return 1;
+@@ -39,9 +36,9 @@ int group_points_grad_wrapper_fast(int b, int c, int n, int npoints, int nsample
+ int group_points_wrapper_fast(int b, int c, int n, int npoints, int nsample, 
+     at::Tensor points_tensor, at::Tensor idx_tensor, at::Tensor out_tensor) {
+ 
+-    const float *points = points_tensor.data<float>();
+-    const int *idx = idx_tensor.data<int>();
+-    float *out = out_tensor.data<float>();
++    const float *points = points_tensor.data_ptr<float>();
++    const int *idx = idx_tensor.data_ptr<int>();
++    float *out = out_tensor.data_ptr<float>();
+ 
+     group_points_kernel_launcher_fast(b, c, n, npoints, nsample, points, idx, out);
+     return 1;
+@@ -63,11 +60,11 @@ int group_points_grad_wrapper_stack(int B, int M, int C, int N, int nsample,
+     CHECK_INPUT(features_batch_cnt_tensor);
+     CHECK_INPUT(grad_features_tensor);
+ 
+-    const float *grad_out = grad_out_tensor.data<float>();
+-    const int *idx = idx_tensor.data<int>();
+-    const int *idx_batch_cnt = idx_batch_cnt_tensor.data<int>();
+-    const int *features_batch_cnt = features_batch_cnt_tensor.data<int>();
+-    float *grad_features = grad_features_tensor.data<float>();
++    const float *grad_out = grad_out_tensor.data_ptr<float>();
++    const int *idx = idx_tensor.data_ptr<int>();
++    const int *idx_batch_cnt = idx_batch_cnt_tensor.data_ptr<int>();
++    const int *features_batch_cnt = features_batch_cnt_tensor.data_ptr<int>();
++    float *grad_features = grad_features_tensor.data_ptr<float>();
+ 
+     group_points_grad_kernel_launcher_stack(B, M, C, N, nsample, grad_out, idx, idx_batch_cnt, features_batch_cnt, grad_features);
+     return 1;
+@@ -84,11 +81,11 @@ int group_points_wrapper_stack(int B, int M, int C, int nsample,
+     CHECK_INPUT(idx_batch_cnt_tensor);
+     CHECK_INPUT(out_tensor);
+ 
+-    const float *features = features_tensor.data<float>();
+-    const int *idx = idx_tensor.data<int>();
+-    const int *features_batch_cnt = features_batch_cnt_tensor.data<int>();
+-    const int *idx_batch_cnt = idx_batch_cnt_tensor.data<int>();
+-    float *out = out_tensor.data<float>();
++    const float *features = features_tensor.data_ptr<float>();
++    const int *idx = idx_tensor.data_ptr<int>();
++    const int *features_batch_cnt = features_batch_cnt_tensor.data_ptr<int>();
++    const int *idx_batch_cnt = idx_batch_cnt_tensor.data_ptr<int>();
++    float *out = out_tensor.data_ptr<float>();
+ 
+     group_points_kernel_launcher_stack(B, M, C, nsample, features, features_batch_cnt, idx, idx_batch_cnt, out);
+     return 1;
+diff --git a/pc_util/src/interpolate.cpp b/pc_util/src/interpolate.cpp
+index 8306c27..4f8fa54 100644
+--- a/pc_util/src/interpolate.cpp
++++ b/pc_util/src/interpolate.cpp
+@@ -1,6 +1,6 @@
+ #include <torch/serialize/tensor.h>
+ #include <vector>
+-#include <THC/THC.h>
++#include <torch/extension.h>
+ #include <math.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+@@ -8,12 +8,8 @@
+ #include <cuda_runtime_api.h>
+ #include "interpolate_gpu.h"
+ 
+-extern THCState *state;
+-
+-
+-
+ #define CHECK_CUDA(x) do { \
+-	  if (!x.type().is_cuda()) { \
++	  if (!x.is_cuda()) { \
+ 		      fprintf(stderr, "%s must be CUDA tensor at %s:%d\n", #x, __FILE__, __LINE__); \
+ 		      exit(-1); \
+ 		    } \
+@@ -29,10 +25,10 @@ extern THCState *state;
+ 
+ void three_nn_wrapper_fast(int b, int n, int m, at::Tensor unknown_tensor, 
+     at::Tensor known_tensor, at::Tensor dist2_tensor, at::Tensor idx_tensor) {
+-    const float *unknown = unknown_tensor.data<float>();
+-    const float *known = known_tensor.data<float>();
+-    float *dist2 = dist2_tensor.data<float>();
+-    int *idx = idx_tensor.data<int>();
++    const float *unknown = unknown_tensor.data_ptr<float>();
++    const float *known = known_tensor.data_ptr<float>();
++    float *dist2 = dist2_tensor.data_ptr<float>();
++    int *idx = idx_tensor.data_ptr<int>();
+ 
+     three_nn_kernel_launcher_fast(b, n, m, unknown, known, dist2, idx);
+ }
+@@ -44,10 +40,10 @@ void three_interpolate_wrapper_fast(int b, int c, int m, int n,
+                          at::Tensor weight_tensor,
+                          at::Tensor out_tensor) {
+ 
+-    const float *points = points_tensor.data<float>();
+-    const float *weight = weight_tensor.data<float>();
+-    float *out = out_tensor.data<float>();
+-    const int *idx = idx_tensor.data<int>();
++    const float *points = points_tensor.data_ptr<float>();
++    const float *weight = weight_tensor.data_ptr<float>();
++    float *out = out_tensor.data_ptr<float>();
++    const int *idx = idx_tensor.data_ptr<int>();
+ 
+ 
+     three_interpolate_kernel_launcher_fast(b, c, m, n, points, idx, weight, out);
+@@ -59,10 +55,10 @@ void three_interpolate_grad_wrapper_fast(int b, int c, int n, int m,
+                             at::Tensor weight_tensor,
+                             at::Tensor grad_points_tensor) {
+ 
+-    const float *grad_out = grad_out_tensor.data<float>();
+-    const float *weight = weight_tensor.data<float>();
+-    float *grad_points = grad_points_tensor.data<float>();
+-    const int *idx = idx_tensor.data<int>();
++    const float *grad_out = grad_out_tensor.data_ptr<float>();
++    const float *weight = weight_tensor.data_ptr<float>();
++    float *grad_points = grad_points_tensor.data_ptr<float>();
++    const int *idx = idx_tensor.data_ptr<int>();
+ 
+     three_interpolate_grad_kernel_launcher_fast(b, c, n, m, grad_out, idx, weight, grad_points);
+ }
+@@ -88,12 +84,12 @@ void three_nn_wrapper_stack(at::Tensor unknown_tensor,
+     int batch_size = unknown_batch_cnt_tensor.size(0);
+     int N = unknown_tensor.size(0);
+     int M = known_tensor.size(0);
+-    const float *unknown = unknown_tensor.data<float>();
+-    const int *unknown_batch_cnt = unknown_batch_cnt_tensor.data<int>();
+-    const float *known = known_tensor.data<float>();
+-    const int *known_batch_cnt = known_batch_cnt_tensor.data<int>();
+-    float *dist2 = dist2_tensor.data<float>();
+-    int *idx = idx_tensor.data<int>();
++    const float *unknown = unknown_tensor.data_ptr<float>();
++    const int *unknown_batch_cnt = unknown_batch_cnt_tensor.data_ptr<int>();
++    const float *known = known_tensor.data_ptr<float>();
++    const int *known_batch_cnt = known_batch_cnt_tensor.data_ptr<int>();
++    float *dist2 = dist2_tensor.data_ptr<float>();
++    int *idx = idx_tensor.data_ptr<int>();
+ 
+     three_nn_kernel_launcher_stack(batch_size, N, M, unknown, unknown_batch_cnt, known, known_batch_cnt, dist2, idx);
+ }
+@@ -113,10 +109,10 @@ void three_interpolate_wrapper_stack(at::Tensor features_tensor,
+ 
+     int N = out_tensor.size(0);
+     int channels = features_tensor.size(1);
+-    const float *features = features_tensor.data<float>();
+-    const float *weight = weight_tensor.data<float>();
+-    const int *idx = idx_tensor.data<int>();
+-    float *out = out_tensor.data<float>();
++    const float *features = features_tensor.data_ptr<float>();
++    const float *weight = weight_tensor.data_ptr<float>();
++    const int *idx = idx_tensor.data_ptr<int>();
++    float *out = out_tensor.data_ptr<float>();
+ 
+     three_interpolate_kernel_launcher_stack(N, channels, features, idx, weight, out);
+ }
+@@ -136,10 +132,10 @@ void three_interpolate_grad_wrapper_stack(at::Tensor grad_out_tensor, at::Tensor
+ 
+     int N = grad_out_tensor.size(0);
+     int channels = grad_out_tensor.size(1);
+-    const float *grad_out = grad_out_tensor.data<float>();
+-    const float *weight = weight_tensor.data<float>();
+-    const int *idx = idx_tensor.data<int>();
+-    float *grad_features = grad_features_tensor.data<float>();
++    const float *grad_out = grad_out_tensor.data_ptr<float>();
++    const float *weight = weight_tensor.data_ptr<float>();
++    const int *idx = idx_tensor.data_ptr<int>();
++    float *grad_features = grad_features_tensor.data_ptr<float>();
+ 
+     // printf("N=%d, channels=%d\n", N, channels);
+     three_interpolate_grad_kernel_launcher_stack(N, channels, grad_out, idx, weight, grad_features);
+diff --git a/pc_util/src/sampling.cpp b/pc_util/src/sampling.cpp
+index 4b53e7c..d3289c5 100644
+--- a/pc_util/src/sampling.cpp
++++ b/pc_util/src/sampling.cpp
+@@ -1,18 +1,15 @@
+ #include <torch/serialize/tensor.h>
+ #include <ATen/cuda/CUDAContext.h>
+ #include <vector>
+-#include <THC/THC.h>
++#include <torch/extension.h>
+ 
+ #include "sampling_gpu.h"
+ 
+-extern THCState *state;
+-
+-
+ int gather_points_wrapper_fast(int b, int c, int n, int npoints, 
+     at::Tensor points_tensor, at::Tensor idx_tensor, at::Tensor out_tensor){
+-    const float *points = points_tensor.data<float>();
+-    const int *idx = idx_tensor.data<int>();
+-    float *out = out_tensor.data<float>();
++    const float *points = points_tensor.data_ptr<float>();
++    const int *idx = idx_tensor.data_ptr<int>();
++    float *out = out_tensor.data_ptr<float>();
+ 
+     gather_points_kernel_launcher_fast(b, c, n, npoints, points, idx, out);
+     return 1;
+@@ -22,9 +19,9 @@ int gather_points_wrapper_fast(int b, int c, int n, int npoints,
+ int gather_points_grad_wrapper_fast(int b, int c, int n, int npoints, 
+     at::Tensor grad_out_tensor, at::Tensor idx_tensor, at::Tensor grad_points_tensor) {
+ 
+-    const float *grad_out = grad_out_tensor.data<float>();
+-    const int *idx = idx_tensor.data<int>();
+-    float *grad_points = grad_points_tensor.data<float>();
++    const float *grad_out = grad_out_tensor.data_ptr<float>();
++    const int *idx = idx_tensor.data_ptr<int>();
++    float *grad_points = grad_points_tensor.data_ptr<float>();
+ 
+     gather_points_grad_kernel_launcher_fast(b, c, n, npoints, grad_out, idx, grad_points);
+     return 1;
+@@ -34,9 +31,9 @@ int gather_points_grad_wrapper_fast(int b, int c, int n, int npoints,
+ int furthest_point_sampling_wrapper(int b, int c, int n, int m, float w1, float w2,
+     at::Tensor points_tensor, at::Tensor temp_tensor, at::Tensor idx_tensor) {
+ 
+-    const float *points = points_tensor.data<float>();
+-    float *temp = temp_tensor.data<float>();
+-    int *idx = idx_tensor.data<int>();
++    const float *points = points_tensor.data_ptr<float>();
++    float *temp = temp_tensor.data_ptr<float>();
++    int *idx = idx_tensor.data_ptr<int>();
+ 
+     furthest_point_sampling_kernel_launcher(b, c, n, m, w1, w2, points, temp, idx);
+     return 1;

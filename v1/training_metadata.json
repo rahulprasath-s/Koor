@@ -1,0 +1,33 @@
+{
+  "source_checkpoint_sha256": "1e377d97ccc5cbb2bf8b717e23327c96446f301a580078819985d62ed43a42ed",
+  "selected_full_roof_epoch": 29,
+  "best_validation_selection_score": 0.9525562636599568,
+  "checkpoint_selection": "validation vertex/edge micro-F1 harmonic mean; normalized tolerance 0.05",
+  "settings": {
+    "epochs": 30,
+    "batch_size": 16,
+    "workers": 4,
+    "corner_lr": 0.0001,
+    "head_lr": 0.001,
+    "freeze_corner_epochs": 1,
+    "tolerance": 0.05,
+    "seed": 42,
+    "max_batches": 0
+  },
+  "training_implementation": {
+    "singleton_batchnorm_fallback": true,
+    "global_edge_pair_indices": true,
+    "edge_threshold": 0.5
+  },
+  "split_counts": {
+    "train": 14400,
+    "val": 1599,
+    "test": 1600
+  },
+  "source_manifest_sha256": "db42fcbe673e7b0a4a81dc579a734d138785ffff158c2145d50f3e4a6e2357b1",
+  "dataset_fingerprint": "a45aa4f88d5fe68a1e8eed987127c697e8587876c16abaedaf985170bdbe2b64",
+  "split_grouping": "Translation/scale-normalized vertices rounded to 6 decimals",
+  "excluded_train_samples_matching_test_geometry": 1,
+  "upstream": "https://github.com/Li-Li-Whu/Point2Roof",
+  "upstream_commit": "ab3d273f1dce45e7fc2e587bd17a7b8ec2fd3aad"
+}

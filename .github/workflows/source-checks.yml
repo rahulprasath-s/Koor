@@ -1,0 +1,18 @@
+name: Source checks
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  source-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Test source-transfer boundaries
+        run: python3 -m unittest discover -s tests -v
+      - name: Check Python syntax
+        run: python3 -m compileall -q tools v1/scripts v1/Point2Roof

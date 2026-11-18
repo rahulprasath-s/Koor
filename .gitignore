@@ -221,3 +221,27 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Koor local datasets, model artifacts, and independent server environments
+**/data/
+**/runs/
+**/release/
+**/checkpoints/
+**/.venv*/
+**/.hf-tools/
+**/.git/
+*.safetensors
+*.pt
+*.pth
+*.ckpt
+*.zip
+*.rar
+*.tar
+*.tar.gz
+*.bak
+*.xyz
+!v1/examples/demo_roof.xyz
+**/predictions*.jsonl
+**/demo_prediction.json
+**/demo_prediction.obj
+.DS_Store

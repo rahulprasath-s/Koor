@@ -1,0 +1,10 @@
+{
+  "repository": "https://huggingface.co/Uruva/Koor-building-reconstruction-v1",
+  "revision": "8dac21750a0231cede813f7f8aa52d248cb57816",
+  "release_manifest_sha256": "a7e21be4db396729f2829e6412e5a8f6336670867a0caa994b5fdd880196f44e",
+  "source_verification": "Source files verified against release manifest; excluded LFS weight pointer verified against expected object identifier",
+  "local_changes": [
+    "Point2Roof/model_cfg.yaml reconstructed from released model_config; JSON is valid YAML"
+  ],
+  "model_weights_included": false
+}

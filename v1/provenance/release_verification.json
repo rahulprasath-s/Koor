@@ -1,0 +1,12 @@
+{
+  "file_hashes": "passed",
+  "strict_weight_loading": "passed",
+  "cuda_inference": "passed",
+  "gpu": "NVIDIA B200",
+  "torch": "2.14.1+cu132",
+  "cuda": "13.2",
+  "demo_status": "ok",
+  "predicted_vertices": 6,
+  "predicted_edges": 7,
+  "scope": "Packaging and inference smoke test; not an accuracy benchmark"
+}

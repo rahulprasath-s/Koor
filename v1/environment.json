@@ -1,0 +1,21 @@
+{
+  "python": "3.12.3",
+  "platform": "Linux-6.8.0-137-generic-x86_64-with-glibc2.39",
+  "torch": "2.14.1+cu132",
+  "torch_cuda_build": "13.2",
+  "runtime_packages": {
+    "numpy": "1.26.4",
+    "scipy": "1.17.1",
+    "scikit-learn": "1.9.1",
+    "easydict": "1.14",
+    "pyyaml": "6.0.3",
+    "safetensors": "0.8.0"
+  },
+  "build_packages": {
+    "setuptools": "78.1.0",
+    "wheel": "0.48.0",
+    "ninja": "1.13.2"
+  },
+  "export_device": "cpu",
+  "gpu_release_smoke_test": "pending"
+}
