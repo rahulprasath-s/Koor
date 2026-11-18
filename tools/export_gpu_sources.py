@@ -90,15 +90,6 @@ def collect(project, version):
             content = (json.dumps(report, indent=2, allow_nan=False) + "\n").encode()
             add(path, destination, content)
 
-    prepared_manifest = project / "data/building3d/koor-v2/manifest.json"
-    if prepared_manifest.is_file():
-        manifest = json.loads(prepared_manifest.read_text())
-        keys = ("dataset", "subset", "license", "source_crs", "source_crs_status",
-                "conversion", "spatial_split", "counts", "unlabelled_official_test_clouds")
-        summary = {key: manifest[key] for key in keys if key in manifest}
-        content = (json.dumps(summary, indent=2, allow_nan=False) + "\n").encode()
-        add(prepared_manifest, "provenance/building3d_preparation_summary.json", content)
-
     if not any(name.startswith(f"{version}/scripts/") for name in members):
         raise ValueError(f"No project scripts found in {project}")
     return members
@@ -116,7 +107,7 @@ def main():
 
     members = {}
     projects = []
-    for version in ("v1", "v2"):
+    for version in ("v1",):
         name = f"Koor-building-reconstruction-{version}"
         project = (base / name).resolve()
         if not project.is_dir():

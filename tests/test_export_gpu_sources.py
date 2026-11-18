@@ -21,7 +21,7 @@ class ExportTests(unittest.TestCase):
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory()
         self.base = Path(self.temporary.name)
-        for version in ("v1", "v2"):
+        for version in ("v1",):
             project = self.base / f"Koor-building-reconstruction-{version}"
             (project / "scripts").mkdir(parents=True)
             (project / "scripts/train.py").write_text("print('fixture')\n")
@@ -44,15 +44,12 @@ class ExportTests(unittest.TestCase):
             path = self.project / name
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text("must not be exported\n")
-        summary = self.project / "data/building3d/koor-v2/manifest.json"
-        summary.parent.mkdir(parents=True, exist_ok=True)
-        summary.write_text(json.dumps({"counts": {"train": 1}, "samples": [{"private_coordinates": [1, 2, 3]}]}))
         output = self.base / "source.zip"
         self.run_export(output)
         with ZipFile(output) as archive:
             names = set(archive.namelist())
             self.assertIn("v1/scripts/train.py", names)
-            self.assertIn("v2/scripts/train.py", names)
+            self.assertTrue(all(name.startswith("v1/") or name == "manifest.json" for name in names))
             self.assertIn("v1/Point2Roof/LICENSE", names)
             self.assertFalse(any(".venv" in name or "/data/" in name or "/runs/" in name or "/build/" in name for name in names))
             self.assertFalse(any(name.endswith((".pt", ".so")) for name in names))
@@ -61,8 +58,6 @@ class ExportTests(unittest.TestCase):
             for row in manifest["files"]:
                 content = archive.read(row["path"])
                 self.assertEqual(hashlib.sha256(content).hexdigest(), row["sha256"])
-            cleaned = json.loads(archive.read("v1/provenance/building3d_preparation_summary.json"))
-            self.assertEqual(cleaned, {"counts": {"train": 1}})
 
     def test_existing_archive_is_preserved(self):
         output = self.base / "existing.zip"

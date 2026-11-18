@@ -6,14 +6,7 @@ Training, evaluation, data preparation, and inference code for reconstructing ro
 
 Koor currently produces a **roof wireframe**: 3D vertices and undirected edges. It does not recover an address, floor count, facades, textures, or a watertight building mesh. V1 is a synthetic-trained research baseline with weak transfer to real LiDAR.
 
-## Versions
-
-| Version | Data | Status |
-|---|---|---|
-| [V1](v1/README.md) | Point2Roof synthetic roofs | Trained; held-out synthetic and zero-shot real-data evaluations completed; weights published |
-| [V2](v2/README.md) | Building3D Entry-level real LiDAR | Dataset prepared on the university server; preparation source transfer pending; no fine-tuning results yet |
-
-The version directories preserve the server's original project layout. `Point2Roof/` contains the patched upstream model and CUDA extension; `scripts/` contains the Koor workflows. Each version uses its own local data, environment, and output directories.
+The completed v1 code is in [v1/](v1/README.md). `Point2Roof/` contains the patched upstream model and CUDA extension; `scripts/` contains the Koor workflows.
 
 ## V1 results
 
@@ -38,7 +31,7 @@ Raw datasets, trained weights, private credentials, environments, and generated 
 
 ## Moving code from the GPU server
 
-The [source exporter](tools/export_gpu_sources.py) reads the two server project directories and creates a ZIP with selected source/configuration files and small summary reports. It does not connect to a remote service or change the training projects. See [the transfer workflow](docs/server-transfer.md).
+The [source exporter](tools/export_gpu_sources.py) reads the v1 server project directory and creates a ZIP with selected source/configuration files and small summary reports. It does not connect to a remote service or change the training project. See [the transfer workflow](docs/server-transfer.md).
 
 ## Attribution and licensing
 
