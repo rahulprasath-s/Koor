@@ -35,7 +35,7 @@ F1 balances missed predictions and extra predictions; higher is better. Here, a 
 
 The stricter scores matter. A 5% tolerance can hide positioning errors, and a high F1 doesn't mean the whole building was reconstructed correctly. On the real holdout, 37 of 561 buildings had no accepted edges.
 
-The model was trained on synthetic data only. These tests use Koor's evaluation procedure and a custom Building3D spatial holdout, so they aren't directly comparable to published benchmark tables. The [full reports](v1/evaluation/) include precision, recall, macro-F1, and failure counts.
+The model was trained on synthetic data only. These tests use Koor's evaluation procedure and a custom Building3D spatial holdout, so they aren't directly comparable to published benchmark tables. I've written up [how the evaluation works](docs/results.md); the [full reports](v1/evaluation/) include precision, recall, macro-F1, and failure counts.
 
 ## Try it or train it yourself
 

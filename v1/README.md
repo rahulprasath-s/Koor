@@ -87,7 +87,7 @@ This command evaluates the full checkpoint saved by training. The Safetensors do
 
 Choose the checkpoint and thresholds using validation, then leave them fixed for the test run. The evaluator predicts from the point cloud first and reads the target geometry afterward.
 
-The output folder contains the overall metrics and per-building predictions. Reports include precision, recall, micro/macro F1, assignment error, and empty-output counts at tolerances of 1%, 2%, and 5% of the building span. The position error ignores unmatched corners, so read it alongside recall. Prediction dumps stay local.
+The output folder contains the overall metrics and per-building predictions. Reports include precision, recall, micro/macro F1, assignment error, and empty-output counts at tolerances of 1%, 2%, and 5% of the building span. The position error ignores unmatched corners, so read it alongside recall. Prediction dumps stay local. See [the results notes](../docs/results.md) for the matching rules and what these scores mean.
 
 ## Package the trained model
 

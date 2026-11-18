@@ -1,4 +1,6 @@
-# Upstream work and provenance
+# Credits and source history
+
+Koor depends on research and code that others made available. This page records that work, the version used, and where the source in this repository came from.
 
 ## Point2Roof
 
@@ -8,7 +10,7 @@
 - Paper: *Point2Roof: End-to-end 3D building roof modeling from airborne LiDAR point clouds*.
 - Software notice: [MIT license](v1/Point2Roof/LICENSE), preserved verbatim.
 
-Koor adapts that architecture and custom CUDA operations. Compatibility changes remove obsolete THC references and update tensor access. The full trainer also uses singleton-safe batch normalization and global edge-pair indexing. [Source patch](v1/provenance/point2roof_changes.patch), [training settings](v1/training_metadata.json).
+I used Point2Roof's architecture and custom CUDA operations, then adapted the code for the training environment. The changes remove obsolete THC references and update tensor access. The full trainer also handles singleton batch normalization and indexes edge pairs across buildings. The [source patch](v1/provenance/point2roof_changes.patch) and [training settings](v1/training_metadata.json) record those changes.
 
 ## Building3D
 
@@ -22,4 +24,4 @@ V1's real-data scores use a custom spatial holdout prepared from labelled Entry-
 
 ## Published Koor source
 
-The initial v1 code was recovered from the author-published release at https://huggingface.co/Uruva/Koor-building-reconstruction-v1, revision `8dac21750a0231cede813f7f8aa52d248cb57816`. Source hashes were checked against that release's manifest. Its LFS weight object was excluded from this repository. [Provenance record](v1/provenance/source.json).
+The initial GitHub copy came from my published release at https://huggingface.co/Uruva/Koor-building-reconstruction-v1, revision `8dac21750a0231cede813f7f8aa52d248cb57816`. Source hashes were checked against that release's manifest. Weights remain on Hugging Face. The [provenance record](v1/provenance/source.json) keeps track of this transfer.
