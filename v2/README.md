@@ -137,6 +137,14 @@ The next step is a GPU package verification job running the generated `verify_re
 
 `v2/slurm/verify_release_clean.sbatch` creates a fresh environment on node-local storage, copies only the hashed release payload, rebuilds the extension for the allocated GPU architecture and saves `release_verification_clean.json`. For a smaller Alex verification allocation, submit it with `--partition=a100mig --gres=gpu:a100small:1`; the build detects the A100 architecture. Partition availability and queue priority still determine the start time.
 
+After both GPU reports pass for the same manifest, use the stored Hugging Face login to publish:
+
+```bash
+python v2/scripts/publish_hf_release.py --public
+```
+
+The publisher uploads only manifest-listed release files plus the two manifest-bound GPU reports. It creates a new repository privately, verifies every remote file at the uploaded commit by SHA-256, then makes it public when `--public` is given. Without that flag a new repository stays private. Existing different weights or unexpected repository files are rejected. Build directories, environments and optimizer checkpoints are never uploaded. No GPU allocation is needed for upload; the account must have write access to `Uruva/Koor-building-reconstruction-v2`.
+
 ## What remains
 
 Strict synthetic localization and missing Building3D edges remain weaknesses. A wireframe viewer is only the first part of a building reconstruction tool. Roof faces, walls with valid ground elevation, image-conditioned geometry and map-based data retrieval still need work.
