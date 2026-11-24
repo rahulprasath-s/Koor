@@ -12,7 +12,12 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - name: Test source-transfer boundaries
+      - name: Test source-transfer boundaries and recorded evaluations
         run: python3 -m unittest discover -s tests -v
       - name: Check Python syntax
-        run: python3 -m compileall -q tools v1/scripts v1/Point2Roof
+        run: python3 -m compileall -q tools v1/scripts v1/Point2Roof v2/scripts
+      - name: Check Slurm shell syntax
+        run: |
+          for script in v2/slurm/*.sbatch; do
+            bash -n "$script"
+          done

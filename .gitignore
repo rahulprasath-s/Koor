@@ -245,3 +245,7 @@ __marimo__/
 **/demo_prediction.json
 **/demo_prediction.obj
 .DS_Store
+
+# Downloaded model packages and uncurated evaluation outputs
+/models/
+/evaluations/
