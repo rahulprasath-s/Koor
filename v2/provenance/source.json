@@ -1,0 +1,18 @@
+{
+  "description": "Building3D-adapted mixed-distillation experiment; not a universal replacement for v1",
+  "base_git_commit": "8aa9a1645dcc0be6c6f38903ce2c9ce20e7e8a5d",
+  "archive_sha256": "2bde8c8e8041b15de39c311478f16b24d3414d281b6a6432dcb683fb4079f9a4",
+  "shared_v1_source_matches_base_checkout": true,
+  "selected_epoch": 14,
+  "selected_checkpoint_sha256": "226a33b0bd5f6888ef17ec5950c957992921a825b7a0990a807e19400e0d5bad",
+  "original_source": "provenance/alex_source",
+  "maintained_source": "scripts and slurm; repository-relative paths, original training/evaluation math",
+  "layout_changes": [
+    "PROJECT in standalone preparation/helper scripts now resolves the repository root two levels up",
+    "Slurm jobs use SLURM_SUBMIT_DIR and v2/scripts paths",
+    "Public full-training run directory is runs/koor-v2-mixed-distill to avoid resuming the archived Alex run",
+    "Public training job default is four hours; original job requested twelve and was reduced to four via scontrol"
+  ],
+  "resume_note": "Source hashes intentionally change after reorganization. Archived Alex checkpoints require the original flat source paths, original absolute data lists and matching runtime; maintained scripts start new runs.",
+  "weights_location": "V2 Hugging Face release preparation pending; no v2 weights included in this Git repository"
+}

@@ -1,0 +1,108 @@
+{
+  "benchmark": "Point2Roof synthetic held-out test; Koor evaluation protocol",
+  "checkpoint": "/home/hpc/v123be/v123be63/Koor-building-reconstruction-v2/evaluations/v1-v2-heldout-5064695/checkpoints/v1-evaluation-only.pt",
+  "checkpoint_sha256": "7b2e128e415ac861b1fcdd1df2f60b5db3a56af35cc313d013d715e23572c4e7",
+  "checkpoint_epoch": 29,
+  "test_list": "/home/hpc/v123be/v123be63/Koor-building-reconstruction-v2/data/prepared/test.txt",
+  "test_list_sha256": "d67bbe10601da99326da935017225b705a786dafd59ac305d01de0ed3d2885b4",
+  "samples": 1600,
+  "seed": 42,
+  "preprocessing": {
+    "points": 1024,
+    "normalization": "full-cloud bbox center; max XYZ span; +0.5",
+    "training_noise_sigma": 0.005
+  },
+  "protocol": {
+    "model_mode": "eval; target-free inference",
+    "vertex_matching": "minimum-total-distance Hungarian assignment, then tolerance cutoff",
+    "edge_matching": "both endpoints must match a ground-truth edge; undirected",
+    "tolerance_units": "fraction of full-cloud maximum XYZ bounding-box span",
+    "edge_threshold": 0.5,
+    "corner_score_threshold": 0.5,
+    "assignment_error": "mean over all assigned corners, including those outside tolerance; unmatched corners omitted",
+    "published_protocol_reproduction": false
+  },
+  "metrics_by_tolerance": {
+    "0.01": {
+      "vertex": {
+        "tp": 7106,
+        "predicted": 11809,
+        "truth": 12400,
+        "precision": 0.6017444322127191,
+        "recall": 0.5730645161290323,
+        "f1": 0.5870544012557314,
+        "macro_f1": 0.6094034282206011
+      },
+      "edge": {
+        "tp": 6672,
+        "predicted": 15741,
+        "truth": 17000,
+        "precision": 0.4238612540499333,
+        "recall": 0.3924705882352941,
+        "f1": 0.40756238355578633,
+        "macro_f1": 0.4329450035901832
+      },
+      "mean_assigned_corner_error_normalized": 0.011131790310743513,
+      "assigned_corner_count": 11781
+    },
+    "0.02": {
+      "vertex": {
+        "tp": 10762,
+        "predicted": 11809,
+        "truth": 12400,
+        "precision": 0.9113388093826742,
+        "recall": 0.8679032258064516,
+        "f1": 0.8890908339873601,
+        "macro_f1": 0.9051549090655422
+      },
+      "edge": {
+        "tp": 13705,
+        "predicted": 15741,
+        "truth": 17000,
+        "precision": 0.8706562480147386,
+        "recall": 0.8061764705882353,
+        "f1": 0.8371766286918543,
+        "macro_f1": 0.8560042512182352
+      },
+      "mean_assigned_corner_error_normalized": 0.011131790310743513,
+      "assigned_corner_count": 11781
+    },
+    "0.05": {
+      "vertex": {
+        "tp": 11556,
+        "predicted": 11809,
+        "truth": 12400,
+        "precision": 0.9785756626301974,
+        "recall": 0.9319354838709677,
+        "f1": 0.9546862736998637,
+        "macro_f1": 0.9638215709885286
+      },
+      "edge": {
+        "tp": 15456,
+        "predicted": 15741,
+        "truth": 17000,
+        "precision": 0.98189441585668,
+        "recall": 0.9091764705882353,
+        "f1": 0.9441373201795913,
+        "macro_f1": 0.9467886758133568
+      },
+      "mean_assigned_corner_error_normalized": 0.011131790310743513,
+      "assigned_corner_count": 11781
+    }
+  },
+  "empty_corner_buildings": 0,
+  "empty_edge_buildings": 0,
+  "empty_corner_rate": 0.0,
+  "empty_edge_rate": 0.0,
+  "inference_seconds_excluding_warmup": 47.36577143194154,
+  "inference_buildings_per_second": 33.77966729200204,
+  "timing_scope": "batched GPU inference plus graph postprocessing; excludes input loading and target scoring",
+  "batch_size": 16,
+  "environment": {
+    "torch": "2.11.0+cu128",
+    "cuda": "12.8",
+    "numpy": "1.26.4",
+    "scipy": "1.17.1",
+    "gpu": "NVIDIA A40"
+  }
+}

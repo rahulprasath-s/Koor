@@ -1,0 +1,107 @@
+{
+  "format": "koor-v2-source-review-v1",
+  "base_git_commit": "8aa9a1645dcc0be6c6f38903ce2c9ce20e7e8a5d",
+  "scope": "Explicit source, aggregate reports and split IDs only; no weights or raw geometry",
+  "original_files": {
+    "source/scripts/prepare_building3d.py": {
+      "source": "scripts/prepare_building3d.py",
+      "sha256": "02b79e3827f689a89ae90c6526035130435a3ef3dc86228c0cd7ecac408ce60f"
+    },
+    "source/scripts/prepare_synthetic.py": {
+      "source": "scripts/prepare_synthetic.py",
+      "sha256": "5e740ae664e765fd0bd19e5254e7fd058a38fbdd24933778e7a606c18e998ff7"
+    },
+    "source/scripts/mixed_utils.py": {
+      "source": "scripts/mixed_utils.py",
+      "sha256": "6c83dae2a6d4b3ea2baa69b9139ce92578d813d51ff0e9324d98833f2a54bde7"
+    },
+    "source/scripts/train_mixed_distill.py": {
+      "source": "scripts/train_mixed_distill.py",
+      "sha256": "9af0c63fc7b09dc27bc50ce3228aa059499d5ef29e7fd9b702fd7969aeaeea5a"
+    },
+    "source/scripts/evaluate_v1_v2.py": {
+      "source": "scripts/evaluate_v1_v2.py",
+      "sha256": "9038f62bad7d1e7ead92b87c364b6bdcd163c88563820dede11ab792fa5326e6"
+    },
+    "source/slurm/verify_v1.sbatch": {
+      "source": "verify_v1.sbatch",
+      "sha256": "46da64917fd7d88068ca3d914354e1d982c52ba78d74a4683a6cc4da174b5e2a"
+    },
+    "source/slurm/smoke_mixed.sbatch": {
+      "source": "smoke_mixed.sbatch",
+      "sha256": "8d4bfefc374f4d1b43878b88ea6afd781c5dadebb06dfff35491dd78c61c30f1"
+    },
+    "source/slurm/train_mixed.sbatch": {
+      "source": "train_mixed.sbatch",
+      "sha256": "e5ccd83103ed97479d6ab1e767d45822518b637f713691243e038919efbfe6da"
+    },
+    "source/slurm/evaluate_heldout.sbatch": {
+      "source": "evaluate_heldout.sbatch",
+      "sha256": "3b99870fdfc1796ebeef0934d8d8a4897b9e91a8b5d7de1003ac6c1adb6f5c56"
+    },
+    "source/project.gitignore": {
+      "source": ".gitignore",
+      "sha256": "719b873bfdb5d4f6f567e9a73635974136bf5581e5b8667ccf6b6ee1f0dd36c1"
+    },
+    "evaluation/v1-synthetic-test/summary.json": {
+      "source": "evaluations/v1-v2-heldout-5064695/v1-synthetic-test/summary.json",
+      "sha256": "cec799b0fe384175a27af54cb4c4d809b5b6ecae06b0b143a18d7575abc4d423"
+    },
+    "evaluation/v1-building3d-holdout/summary.json": {
+      "source": "evaluations/v1-v2-heldout-5064695/v1-building3d-holdout/summary.json",
+      "sha256": "fcab7b74f7fd72356003312756a29ff7f8917917c8ec79a8f8a8eff615e2f327"
+    },
+    "evaluation/v2-synthetic-test/summary.json": {
+      "source": "evaluations/v1-v2-heldout-5064695/v2-synthetic-test/summary.json",
+      "sha256": "7d4de03fd34a6d1fdc2a3154bc79a55168c4e895fdb4a317c413982bab5b9821"
+    },
+    "evaluation/v2-building3d-holdout/summary.json": {
+      "source": "evaluations/v1-v2-heldout-5064695/v2-building3d-holdout/summary.json",
+      "sha256": "c7a4a70702d7b6fe12a386557d1bec2b84479a82d8a5134d549b909e4d14e309"
+    },
+    "evaluation/comparison-synthetic-test.json": {
+      "source": "evaluations/v1-v2-heldout-5064695/comparison-synthetic-test.json",
+      "sha256": "6536ed012fa0e7f3974a9ab8c79cd1cfd7b469edeb845c7c4e4c10d264116789"
+    },
+    "evaluation/comparison-building3d-holdout.json": {
+      "source": "evaluations/v1-v2-heldout-5064695/comparison-building3d-holdout.json",
+      "sha256": "6e4a728736634420e653af723e1f800cb814045f4db1ffe7fd96b5dd9aa90bef"
+    },
+    "evaluation/selection.json": {
+      "source": "evaluations/v1-v2-heldout-5064695/selection.json",
+      "sha256": "cb6549fd18409a782c0b746846817610ecb639f634503032bb7fb4ba344b5f4d"
+    },
+    "training/history.json": {
+      "source": "runs/koor-mixed-distill-alex-v2/history.json",
+      "sha256": "0bce6eafa7be2b79625fc64a3a181cb56ae7677f02b52986f220f6d3f64c65cb"
+    },
+    "training/baseline_validation.json": {
+      "source": "runs/koor-mixed-distill-alex-v2/baseline_validation.json",
+      "sha256": "25b1f4af0b4463ed8a27f0156c50543a371516a805f08141bd4dcb506350774c"
+    }
+  },
+  "files": {
+    "source/scripts/prepare_building3d.py": "02b79e3827f689a89ae90c6526035130435a3ef3dc86228c0cd7ecac408ce60f",
+    "source/scripts/prepare_synthetic.py": "5e740ae664e765fd0bd19e5254e7fd058a38fbdd24933778e7a606c18e998ff7",
+    "source/scripts/mixed_utils.py": "6c83dae2a6d4b3ea2baa69b9139ce92578d813d51ff0e9324d98833f2a54bde7",
+    "source/scripts/train_mixed_distill.py": "9af0c63fc7b09dc27bc50ce3228aa059499d5ef29e7fd9b702fd7969aeaeea5a",
+    "source/scripts/evaluate_v1_v2.py": "9038f62bad7d1e7ead92b87c364b6bdcd163c88563820dede11ab792fa5326e6",
+    "source/slurm/verify_v1.sbatch": "46da64917fd7d88068ca3d914354e1d982c52ba78d74a4683a6cc4da174b5e2a",
+    "source/slurm/smoke_mixed.sbatch": "8d4bfefc374f4d1b43878b88ea6afd781c5dadebb06dfff35491dd78c61c30f1",
+    "source/slurm/train_mixed.sbatch": "e5ccd83103ed97479d6ab1e767d45822518b637f713691243e038919efbfe6da",
+    "source/slurm/evaluate_heldout.sbatch": "3b99870fdfc1796ebeef0934d8d8a4897b9e91a8b5d7de1003ac6c1adb6f5c56",
+    "source/project.gitignore": "719b873bfdb5d4f6f567e9a73635974136bf5581e5b8667ccf6b6ee1f0dd36c1",
+    "evaluation/v1-synthetic-test/summary.json": "cec799b0fe384175a27af54cb4c4d809b5b6ecae06b0b143a18d7575abc4d423",
+    "evaluation/v1-building3d-holdout/summary.json": "fcab7b74f7fd72356003312756a29ff7f8917917c8ec79a8f8a8eff615e2f327",
+    "evaluation/v2-synthetic-test/summary.json": "7d4de03fd34a6d1fdc2a3154bc79a55168c4e895fdb4a317c413982bab5b9821",
+    "evaluation/v2-building3d-holdout/summary.json": "c7a4a70702d7b6fe12a386557d1bec2b84479a82d8a5134d549b909e4d14e309",
+    "evaluation/comparison-synthetic-test.json": "6536ed012fa0e7f3974a9ab8c79cd1cfd7b469edeb845c7c4e4c10d264116789",
+    "evaluation/comparison-building3d-holdout.json": "6e4a728736634420e653af723e1f800cb814045f4db1ffe7fd96b5dd9aa90bef",
+    "evaluation/selection.json": "cb6549fd18409a782c0b746846817610ecb639f634503032bb7fb4ba344b5f4d",
+    "training/history.json": "0bce6eafa7be2b79625fc64a3a181cb56ae7677f02b52986f220f6d3f64c65cb",
+    "training/baseline_validation.json": "25b1f4af0b4463ed8a27f0156c50543a371516a805f08141bd4dcb506350774c",
+    "provenance/split_ids.json": "2d0cd7b5e55c1a1ddd4ec3186efa59532520f4a44db1b411461f3ff891e5c588",
+    "provenance/environment.json": "320c0db28002ddae5aa479ea7998ee307d10f4b87dc6a62335cf488e4f95e090",
+    "provenance/shared_v1_source_hashes.json": "fbb8329e9225cd463a69d30876855ff71835c54c4777f06e901751072a3fb725"
+  }
+}

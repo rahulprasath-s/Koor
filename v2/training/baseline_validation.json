@@ -1,0 +1,174 @@
+{
+  "validation": {
+    "synthetic": {
+      "samples": 1599,
+      "metrics_by_tolerance": {
+        "0.01": {
+          "vertex": {
+            "tp": 7023,
+            "predicted": 11809,
+            "truth": 12372,
+            "precision": 0.5947158946566178,
+            "recall": 0.5676527643064986,
+            "f1": 0.5808692775319466,
+            "macro_f1": 0.6075844768060179
+          },
+          "edge": {
+            "tp": 6592,
+            "predicted": 15821,
+            "truth": 17007,
+            "precision": 0.416661399405853,
+            "recall": 0.38760510378079616,
+            "f1": 0.40160838308760816,
+            "macro_f1": 0.432960547400061
+          },
+          "mean_assigned_corner_error_normalized": 0.01129857398061082,
+          "assigned_corner_count": 11782
+        },
+        "0.02": {
+          "vertex": {
+            "tp": 10662,
+            "predicted": 11809,
+            "truth": 12372,
+            "precision": 0.9028706918452029,
+            "recall": 0.8617846750727449,
+            "f1": 0.8818493858814772,
+            "macro_f1": 0.8984158337609874
+          },
+          "edge": {
+            "tp": 13544,
+            "predicted": 15821,
+            "truth": 17007,
+            "precision": 0.8560773655268314,
+            "recall": 0.7963779620156406,
+            "f1": 0.8251492628244181,
+            "macro_f1": 0.8462716301304065
+          },
+          "mean_assigned_corner_error_normalized": 0.01129857398061082,
+          "assigned_corner_count": 11782
+        },
+        "0.05": {
+          "vertex": {
+            "tp": 11573,
+            "predicted": 11809,
+            "truth": 12372,
+            "precision": 0.9800152426115675,
+            "recall": 0.9354186873585516,
+            "f1": 0.9571977999255614,
+            "macro_f1": 0.9656544157765641
+          },
+          "edge": {
+            "tp": 15543,
+            "predicted": 15821,
+            "truth": 17007,
+            "precision": 0.982428417925542,
+            "recall": 0.9139177985535368,
+            "f1": 0.946935542829292,
+            "macro_f1": 0.9498811113411335
+          },
+          "mean_assigned_corner_error_normalized": 0.01129857398061082,
+          "assigned_corner_count": 11782
+        }
+      },
+      "empty_corner_buildings": 0,
+      "empty_edge_buildings": 0,
+      "inference": "eval mode, points only; labels used only for scoring"
+    },
+    "real": {
+      "samples": 533,
+      "metrics_by_tolerance": {
+        "0.01": {
+          "vertex": {
+            "tp": 66,
+            "predicted": 2773,
+            "truth": 4314,
+            "precision": 0.023800937612693834,
+            "recall": 0.015299026425591099,
+            "f1": 0.018625652603358262,
+            "macro_f1": 0.019774245885217194
+          },
+          "edge": {
+            "tp": 17,
+            "predicted": 2239,
+            "truth": 4932,
+            "precision": 0.007592675301473872,
+            "recall": 0.0034468775344687753,
+            "f1": 0.004741319202342769,
+            "macro_f1": 0.004998659876708656
+          },
+          "mean_assigned_corner_error_normalized": 0.11997756747716987,
+          "assigned_corner_count": 2595
+        },
+        "0.02": {
+          "vertex": {
+            "tp": 217,
+            "predicted": 2773,
+            "truth": 4314,
+            "precision": 0.07825459790840245,
+            "recall": 0.050301344459898006,
+            "f1": 0.06123888810498095,
+            "macro_f1": 0.06497914538278313
+          },
+          "edge": {
+            "tp": 96,
+            "predicted": 2239,
+            "truth": 4932,
+            "precision": 0.042876284055381866,
+            "recall": 0.019464720194647202,
+            "f1": 0.02677450843675917,
+            "macro_f1": 0.026132245695225865
+          },
+          "mean_assigned_corner_error_normalized": 0.11997756747716987,
+          "assigned_corner_count": 2595
+        },
+        "0.05": {
+          "vertex": {
+            "tp": 798,
+            "predicted": 2773,
+            "truth": 4314,
+            "precision": 0.28777497295348,
+            "recall": 0.18497913769123783,
+            "f1": 0.225201072386059,
+            "macro_f1": 0.23176228367783114
+          },
+          "edge": {
+            "tp": 334,
+            "predicted": 2239,
+            "truth": 4932,
+            "precision": 0.14917373827601607,
+            "recall": 0.06772100567721005,
+            "f1": 0.09315297726955794,
+            "macro_f1": 0.09145453785663828
+          },
+          "mean_assigned_corner_error_normalized": 0.11997756747716987,
+          "assigned_corner_count": 2595
+        }
+      },
+      "empty_corner_buildings": 0,
+      "empty_edge_buildings": 62,
+      "inference": "eval mode, points only; labels used only for scoring"
+    }
+  },
+  "settings": {
+    "initial_model": "/home/hpc/v123be/v123be63/Koor/models/koor-v1",
+    "synthetic_dir": "/home/hpc/v123be/v123be63/Koor/data/prepared",
+    "real_dir": "/home/hpc/v123be/v123be63/Koor/data/building3d/koor-v2",
+    "run_dir": "/home/hpc/v123be/v123be63/Koor/runs/koor-mixed-distill-alex-v2",
+    "epochs": 15,
+    "batch_size": 16,
+    "workers": 4,
+    "corner_lr": 1e-05,
+    "head_lr": 0.0001,
+    "score_distill_weight": 1.0,
+    "offset_distill_weight": 1.0,
+    "temperature": 2.0,
+    "min_synthetic_retention": 1.0,
+    "seed": 42,
+    "max_batches": 0,
+    "checkpoint_every_batches": 100,
+    "stop_after_batches": 0,
+    "resume": false
+  },
+  "dataset_fingerprint": "d4277a19d1447d0a064ff8f4584e87a9a8383584a9c60f4c7c714f6fde2fc93a",
+  "initialization_release_sha256": "b1745f63996a6c3518d8450c5c29a9e06a6482b7f22487deeaa80edc08ec4951"
+}

@@ -1,0 +1,16 @@
+{
+  "v1_epoch": 29,
+  "v1_source_release_sha256": "b1745f63996a6c3518d8450c5c29a9e06a6482b7f22487deeaa80edc08ec4951",
+  "v1_adapter_sha256": "7b2e128e415ac861b1fcdd1df2f60b5db3a56af35cc313d013d715e23572c4e7",
+  "v1_source_weights_sha256": "5c139376f027f2565e413fae7b816ed1000849518a92c0fbd3329a0d59b688d2",
+  "v2_epoch": 14,
+  "v2_source_checkpoint": "/home/hpc/v123be/v123be63/Koor-building-reconstruction-v2/runs/koor-mixed-distill-alex-v2/best_joint.pt",
+  "v2_checkpoint_sha256": "226a33b0bd5f6888ef17ec5950c957992921a825b7a0990a807e19400e0d5bad",
+  "dataset_fingerprint": "d4277a19d1447d0a064ff8f4584e87a9a8383584a9c60f4c7c714f6fde2fc93a",
+  "checkpoint_selection": "Existing best_joint.pt selected on validation only; frozen before held-out scoring",
+  "evaluations": [
+    "synthetic test: 1600",
+    "custom Building3D holdout: 561"
+  ],
+  "published_benchmark_protocol_reproduction": false
+}
