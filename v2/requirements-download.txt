@@ -1,0 +1,3 @@
+# Download tools; versions were not captured in the experiment environment report.
+huggingface_hub
+gdown
