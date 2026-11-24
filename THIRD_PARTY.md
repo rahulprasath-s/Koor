@@ -22,6 +22,10 @@ I used Point2Roof's architecture and custom CUDA operations, then adapted the co
 
 V1's real-data scores use a custom spatial holdout prepared from labelled Entry-level data. The official unlabelled test set was not scored. No Building3D training is claimed for v1.
 
+V2 trains on 4,538 labelled Entry-level roofs, validates on 533 and evaluates on a separate 561-roof spatial holdout. Synthetic replay and a frozen v1 corner teacher are used during training. The official 583 unlabelled test clouds remain unused for scoring. The [v2 reports](v2/evaluation/) and [split identifiers](v2/provenance/split_ids.json) record that experiment.
+
 ## Published Koor source
 
 The initial GitHub copy came from my published release at https://huggingface.co/Uruva/Koor-building-reconstruction-v1, revision `8dac21750a0231cede813f7f8aa52d248cb57816`. Source hashes were checked against that release's manifest. Weights remain on Hugging Face. The [provenance record](v1/provenance/source.json) keeps track of this transfer.
+
+V2 source and aggregate reports were exported from Alex after held-out evaluation. Every exported file was checked against the archive manifest, and shared v1 source hashes matched the existing checkout. Original Alex files are preserved in [v2/provenance/alex_source](v2/provenance/alex_source/), alongside the [import record](v2/provenance/source.json). Maintained scripts have repository-relative paths; training and scoring mathematics were retained.

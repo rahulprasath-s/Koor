@@ -52,3 +52,13 @@ These are results from the Koor evaluation procedure. Different splits, matching
 - [Clean-environment release verification](../v1/provenance/release_verification.json)
 
 The last file records a packaging and inference check on B200. Its demo is a small mathematical roof, not another accuracy benchmark.
+
+## V2: mixed training on synthetic and Building3D roofs
+
+V2 was trained on Alex using synthetic replay and a frozen v1 corner teacher. Its epoch-14 checkpoint was selected on the joint validation score before held-out evaluation. The [v2 reports](../v2/evaluation/) rerun v1 and v2 together, using the same 1,600 synthetic test roofs and 561-building spatial holdout. These reports are a separate Alex measurement from the original v1 B200 reports above; use the paired reports for v1/v2 changes.
+
+At 5% tolerance, synthetic vertex/edge F1 changes from 0.9547/0.9441 to 0.9451/0.9276. Building3D changes from 0.1763/0.0482 to 0.5275/0.3979. All six real-data F1 scores improve, and all six synthetic F1 scores decline. At 1%, synthetic edge F1 falls from 0.4076 to 0.3334. Building3D roofs with no accepted edges increase from 37 to 45; both models have zero empty edge predictions on the synthetic test.
+
+The experiment therefore shows adaptation with a retention tradeoff. It did not pass the original requirement to retain all synthetic validation metrics while improving the real score. `best_retained.pt` was never created; the reported model is the validation-selected `best_joint.pt`. The [full v2 guide](../v2/README.md) includes every tolerance and training details.
+
+The custom spatial split, normalized tolerance and graph-matching protocol remain the same types of Koor evaluation described above. Higher aggregate F1 does not establish valid closed roof faces, complete buildings or reliable individual predictions. None of these tests establish performance from photographs, map coordinates or addresses.

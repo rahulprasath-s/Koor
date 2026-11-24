@@ -1,64 +1,67 @@
 # Koor
 
-I'm building Koor to understand how a neural network can turn a building's roof point cloud into a 3D structure.
+I'm building Koor to understand how a neural network can turn a roof point cloud into a 3D structure I can inspect and work with.
 
-For this first release, I worked through the whole process: preparing the data, getting the CUDA code running on my university's B200 GPUs, training the model, testing it, and putting the weights on Hugging Face. This repository holds the code behind that work.
+I started with synthetic roofs on my university's B200 GPUs. V1 did well on those examples, but testing it on real Building3D LiDAR exposed a large gap. For v2, I trained on both datasets on an A40 at NHR@FAU, keeping a frozen v1 model as a corner-prediction teacher.
 
-Koor uses the [Point2Roof architecture](https://github.com/Li-Li-Whu/Point2Roof). I've included the data preparation, training, evaluation, and inference scripts, along with the compatibility changes needed for the environment I used.
+V2 improved the real-data scores. It also gave up some synthetic accuracy, particularly when corners had to be placed precisely. This repository includes the code and both results, because that tradeoff is part of the experiment.
 
-**[Download the model on Hugging Face](https://huggingface.co/Uruva/Koor-building-reconstruction-v1)** · **[Setup and training guide](v1/README.md)**
+Koor uses the [Point2Roof architecture](https://github.com/Li-Li-Whu/Point2Roof), with compatibility fixes and preparation, training, evaluation and inference code around it.
+
+**[V1 weights on Hugging Face](https://huggingface.co/Uruva/Koor-building-reconstruction-v1)** · **[V1 guide](v1/README.md)** · **[V2 training and results](v2/README.md)**
+
+V2 weights are being prepared for release. The v2 source and measured results are available here now.
 
 ## What it does
 
-Give the model a point cloud for one building roof. It predicts corners, refines their positions, and decides which corners should be connected. The result is a **roof wireframe**, saved as JSON and OBJ.
+Give Koor a point cloud for one building roof. It predicts corners, refines their positions and decides which corners should be connected. The output is a **3D roof wireframe**.
 
 ```text
-Roof points → corner prediction → refinement → edge prediction → 3D wireframe
+Roof points → corner prediction → refinement → edge prediction → wireframe
 ```
 
-Walls, textures, addresses, and floor counts are outside what this model currently learns. The output can contain missing or extra connections, so it still needs inspection.
+Predictions can have missing corners, misplaced points or disconnected edges. Koor doesn't yet take an address or image, recover floor counts, or produce walls and textures. An interactive viewer can display its wireframe, but a full building model still needs more geometry and data.
 
-## What I learned from testing
+## What changed in v2
 
-The model performed well on unseen synthetic roofs. Testing it on real Building3D LiDAR was a different story: the scores fell sharply. I'm including both results because the synthetic score alone would give an incomplete picture of what the model can do.
+Both models were evaluated together on Alex for this comparison. These are micro-F1 scores at a tolerance of 5% of each input cloud's largest XYZ bounding-box span:
 
-| Test set | Buildings | Corner tolerance | Corner F1 | Edge F1 |
-|---|---:|---:|---:|---:|
-| Synthetic held-out test | 1,600 | 1% | 0.5874 | 0.4079 |
-| Synthetic held-out test | 1,600 | 2% | 0.8891 | 0.8372 |
-| Synthetic held-out test | 1,600 | 5% | 0.9549 | 0.9445 |
-| Real Building3D holdout, without fine-tuning | 561 | 1% | 0.0032 | 0.0000 |
-| Real Building3D holdout, without fine-tuning | 561 | 2% | 0.0212 | 0.0028 |
-| Real Building3D holdout, without fine-tuning | 561 | 5% | 0.1770 | 0.0482 |
+| Held-out dataset | Buildings | Vertex F1, v1 → v2 | Edge F1, v1 → v2 |
+|---|---:|---:|---:|
+| Synthetic test | 1,600 | 0.9547 → 0.9451 | 0.9441 → 0.9276 |
+| Building3D spatial holdout | 561 | 0.1763 → 0.5275 | 0.0482 → 0.3979 |
 
-F1 balances missed predictions and extra predictions; higher is better. Here, a corner must fall within the stated fraction of the building's maximum bounding-box span to count as a match. An edge needs both endpoints to match a true roof connection. The table reports micro-F1, pooled across buildings.
+The strict scores tell a less forgiving story. At 1% tolerance, synthetic edge F1 fell from 0.4076 to 0.3334. On Building3D, 45 of 561 roofs had no accepted edges in v2, compared with 37 in v1, despite the higher aggregate F1. I would use v2 as a Building3D-adapted experiment, not assume it improves every roof.
 
-The stricter scores matter. A 5% tolerance can hide positioning errors, and a high F1 doesn't mean the whole building was reconstructed correctly. On the real holdout, 37 of 561 buildings had no accepted edges.
+V2's reported checkpoint is epoch 14, selected on validation before test evaluation. No epoch met the original requirement to preserve all six synthetic F1 scores while improving the real-data score. All six Building3D held-out F1 scores increased, and all six synthetic scores declined.
 
-The model was trained on synthetic data only. These tests use Koor's evaluation procedure and a custom Building3D spatial holdout, so they aren't directly comparable to published benchmark tables. I've written up [how the evaluation works](docs/results.md); the [full reports](v1/evaluation/) include precision, recall, macro-F1, and failure counts.
+The [v2 guide](v2/README.md#held-out-results) has every tolerance and the [full reports](v2/evaluation/) include precision, recall, macro-F1 and failure counts. The [evaluation notes](docs/results.md) explain the scoring and its limits. These are Koor evaluations on a custom Building3D holdout, not published benchmark reproductions. V1's original B200 reports are preserved separately.
 
-## Try it or train it yourself
+## Try it or train it
 
-Start with the [v1 guide](v1/README.md). It walks through the environment, a demo prediction, data preparation, training, and evaluation.
+Start with the [v1 guide](v1/README.md) to try the published weights and procedural demo. Use the [v2 guide](v2/README.md) for mixed training, deterministic replay, checkpoint/resume testing and Slurm jobs on Alex.
 
-I trained and checked the release on NVIDIA B200 with Python 3.12, PyTorch 2.14.1, and CUDA 13.2. The custom CUDA extension needs to be built before inference. I haven't verified other GPU setups yet.
+V1 was trained and checked on B200 with Python 3.12, PyTorch 2.14.1 and CUDA 13.2. The v2 experiment used A40 with Python 3.12.0, PyTorch 2.11.0 and CUDA 12.8. The custom CUDA extension must be built for the target GPU.
 
-Weights are on Hugging Face. Datasets come from their original providers; neither is stored in this Git repository. The small demo cloud is generated mathematically and is included so you can check that inference runs.
+Weights are hosted separately on Hugging Face. Download datasets from their original providers. Environments, raw datasets, training checkpoints, logs and prediction dumps are excluded from this Git repository. The included v1 demo cloud is generated mathematically and is not a benchmark sample.
 
 ## Finding your way around
 
 ```text
-v1/scripts/          Data preparation, training, evaluation, and release export
-v1/Point2Roof/      Patched model code and CUDA operations
-v1/evaluation/      Saved results from the two test sets
-v1/inference.py     Run a point cloud through the published model
-tools/              Export source code from the GPU server
+v1/                 Published v1 source, inference and original evaluation
+v1/Point2Roof/      Shared model architecture and patched CUDA operations
+v2/scripts/         Dataset preparation, mixed distillation and paired evaluation
+v2/slurm/           Batch jobs that run without an active laptop connection
+v2/evaluation/      Controlled v1/v2 comparisons on Alex
+v2/provenance/      Split IDs, source hashes, runtime and original Alex files
+docs/               Evaluation and source-transfer notes
+tools/              Source-transfer utilities
 ```
 
-If you're working from a remote training machine, the [transfer guide](docs/server-transfer.md) explains how to bring the source across without copying datasets or environments.
+The server directory name can be `Koor-building-reconstruction-v2`; the Git repository contains both versioned source trees. Shared model code stays in `v1/Point2Roof`. The [v2 guide](v2/README.md#code-and-experiment-records) explains how the cleaned layout relates to the original Alex checkpoint paths.
 
 ## Credit where it's due
 
-This project builds on the work of the Point2Roof authors and uses Building3D for the real-data evaluation. Their work made this experiment possible. References and the preserved upstream software license are in [THIRD_PARTY.md](THIRD_PARTY.md).
+Koor builds on Point2Roof and uses Building3D for real-data training and evaluation in v2. Their research and data made this experiment possible. References and the preserved upstream software notice are in [THIRD_PARTY.md](THIRD_PARTY.md).
 
-I haven't assigned a license to the original Koor code or weights yet. The training dataset's applicable terms still need to be confirmed; the upstream software's MIT license is recorded separately in [LICENSING.md](LICENSING.md).
+I haven't assigned a license to the original Koor code or weights. Building3D lists CC BY-NC-SA 4.0; applicable Point2Roof dataset terms still need to be confirmed. The upstream software's MIT license is recorded separately in [LICENSING.md](LICENSING.md).
