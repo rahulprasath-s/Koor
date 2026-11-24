@@ -4,7 +4,9 @@ V1 worked well on synthetic roofs, but real LiDAR exposed how much was missing. 
 
 The result is more useful on the Building3D holdout. It also loses some synthetic accuracy. I'm keeping both sides of that result here: this is a Building3D-adapted experiment, rather than a replacement that improves every v1 metric.
 
-Input is one roof's XYZ point cloud; output is a wireframe of 3D corners and edges. The model doesn't take an address or image, predict floors, or produce a complete textured building. V2 weights are being prepared for Hugging Face and are not included here.
+Input is one roof's XYZ point cloud; output is a wireframe of 3D corners and edges. The model doesn't take an address or image, predict floors, or produce a complete textured building.
+
+**[Download the v2 weights and standalone inference package on Hugging Face](https://huggingface.co/Uruva/Koor-building-reconstruction-v2).** The release contains the selected epoch-14 weights, inference code, CUDA source and held-out evaluation reports. Weights are hosted there separately from this Git repository.
 
 ## Held-out results
 

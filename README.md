@@ -8,9 +8,7 @@ V2 improved the real-data scores. It also gave up some synthetic accuracy, parti
 
 Koor uses the [Point2Roof architecture](https://github.com/Li-Li-Whu/Point2Roof), with compatibility fixes and preparation, training, evaluation and inference code around it.
 
-**[V1 weights on Hugging Face](https://huggingface.co/Uruva/Koor-building-reconstruction-v1)** · **[V1 guide](v1/README.md)** · **[V2 training and results](v2/README.md)**
-
-V2 weights are being prepared for release. The v2 source and measured results are available here now.
+**[V2 model on Hugging Face](https://huggingface.co/Uruva/Koor-building-reconstruction-v2)** · **[V2 training and results](v2/README.md)** · **[V1 model](https://huggingface.co/Uruva/Koor-building-reconstruction-v1)** · **[V1 guide](v1/README.md)**
 
 ## What it does
 

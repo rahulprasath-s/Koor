@@ -14,5 +14,5 @@
     "Public training job default is four hours; original job requested twelve and was reduced to four via scontrol"
   ],
   "resume_note": "Source hashes intentionally change after reorganization. Archived Alex checkpoints require the original flat source paths, original absolute data lists and matching runtime; maintained scripts start new runs.",
-  "weights_location": "V2 Hugging Face release preparation pending; no v2 weights included in this Git repository"
+  "weights_location": "https://huggingface.co/Uruva/Koor-building-reconstruction-v2"
 }
