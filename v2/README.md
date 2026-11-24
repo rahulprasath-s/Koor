@@ -123,6 +123,18 @@ sbatch v2/slurm/evaluate_heldout.sbatch
 
 This freezes the selected checkpoint and scores both models on both held-out lists. Per-building predictions and aggregate results go to an ignored `evaluations/` directory. The committed `v2/evaluation/` reports belong to the archived Alex experiment. Avoid tuning thresholds or selecting checkpoints from test results.
 
+## Preparing the recorded v2 weights for Hugging Face
+
+The [release exporter](scripts/export_hf_release.py) defaults to the original Alex run and paired evaluation directory. Run it in that workspace, where the original checkpoint and hash-matched source still exist. It can be saved as `scripts/export_hf_v2.py` in the original flat workspace, or run under `v2/scripts` in a checkout containing the recorded files:
+
+```bash
+CUDA_VISIBLE_DEVICES="" .venv/bin/python scripts/export_hf_v2.py
+```
+
+Use `--checkpoint`, `--evaluation`, or `--output` to override locations. It verifies the selected checkpoint against the held-out reports, checks exact safetensors weight conversion, bundles standalone inference and CUDA source, and writes a model card with both gains and regressions. No optimizer state or raw benchmark geometry is bundled, and nothing is uploaded. It refuses to overwrite a release directory.
+
+The next step is a GPU package verification job running the generated `verify_release.py`. That writes `release_verification.json` with a hash of the package manifest. Verify the package in a clean environment before uploading it. Model-weight licensing metadata is not assigned by this exporter; see the generated licensing record and original data terms.
+
 ## What remains
 
 Strict synthetic localization and missing Building3D edges remain weaknesses. A wireframe viewer is only the first part of a building reconstruction tool. Roof faces, walls with valid ground elevation, image-conditioned geometry and map-based data retrieval still need work.
