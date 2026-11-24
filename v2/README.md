@@ -135,6 +135,8 @@ Use `--checkpoint`, `--evaluation`, or `--output` to override locations. It veri
 
 The next step is a GPU package verification job running the generated `verify_release.py`. That writes `release_verification.json` with a hash of the package manifest. Verify the package in a clean environment before uploading it. Model-weight licensing metadata is not assigned by this exporter; see the generated licensing record and original data terms.
 
+`v2/slurm/verify_release_clean.sbatch` creates a fresh environment on node-local storage, copies only the hashed release payload, rebuilds the extension for the allocated GPU architecture and saves `release_verification_clean.json`. For a smaller Alex verification allocation, submit it with `--partition=a100mig --gres=gpu:a100small:1`; the build detects the A100 architecture. Partition availability and queue priority still determine the start time.
+
 ## What remains
 
 Strict synthetic localization and missing Building3D edges remain weaknesses. A wireframe viewer is only the first part of a building reconstruction tool. Roof faces, walls with valid ground elevation, image-conditioned geometry and map-based data retrieval still need work.

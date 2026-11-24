@@ -59,10 +59,12 @@ koor_python="$koor_clean_root/venv/bin/python"
   -r "$koor_clean_root/package/requirements.txt" \
   -r "$koor_clean_root/package/requirements-build.txt"
 cd "$koor_clean_root/package"
-"$koor_python" install_cuda_extension.py --arch 8.6 --jobs 4
+koor_cuda_arch=$("$koor_python" -c 'import torch; major, minor = torch.cuda.get_device_capability(0); print(f"{major}.{minor}")')
+echo "Building the bundled extension for allocated CUDA architecture $koor_cuda_arch"
+"$koor_python" install_cuda_extension.py --arch "$koor_cuda_arch" --jobs 4
 srun "$koor_python" -u verify_release.py --device cuda:0
 
-"$koor_python" - "$koor_release" <<'PY'
+"$koor_python" - "$koor_release" "$koor_cuda_arch" <<'PY'
 import hashlib
 import importlib.metadata
 import json
@@ -78,7 +80,7 @@ for name in ("file_hashes", "strict_weight_loading", "cuda_inference"):
     if report[name] != "passed":
         raise RuntimeError(f"Clean verification failed: {name}")
 report.update(environment_isolated=True, extension_built_from_package=True,
-              cuda_arch="8.6", verification_kind="clean-environment-package-smoke-test",
+              cuda_arch=sys.argv[2], verification_kind="clean-environment-package-smoke-test",
               runtime_packages={name: importlib.metadata.version(name) for name in
                                 ("torch", "numpy", "scipy", "scikit-learn", "easydict", "safetensors", "pc_util")})
 target = release / "release_verification_clean.json"
