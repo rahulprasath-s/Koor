@@ -10,7 +10,11 @@ Koor uses the [Point2Roof architecture](https://github.com/Li-Li-Whu/Point2Roof)
 
 **[V2 model on Hugging Face](https://huggingface.co/Uruva/Koor-building-reconstruction-v2)** · **[V2 training and results](v2/README.md)** · **[V1 model](https://huggingface.co/Uruva/Koor-building-reconstruction-v1)** · **[V1 guide](v1/README.md)**
 
-## What it does
+## V3 experiment
+
+For v3, I'm trying to reconstruct a building from an aerial photo and a footprint mask. The model learns to output triangle geometry in JSON, which a small converter turns into a Three.js mesh. The [v3 guide](v3/README.md) covers the Dutch building dataset, the LoRA pilot, and what still needs to be measured.
+
+## What v1 and v2 do
 
 Give Koor a point cloud for one building roof. It predicts corners, refines their positions and decides which corners should be connected. The output is a **3D roof wireframe**.
 
@@ -18,7 +22,7 @@ Give Koor a point cloud for one building roof. It predicts corners, refines thei
 Roof points → corner prediction → refinement → edge prediction → wireframe
 ```
 
-Predictions can have missing corners, misplaced points or disconnected edges. Koor doesn't yet take an address or image, recover floor counts, or produce walls and textures. An interactive viewer can display its wireframe, but a full building model still needs more geometry and data.
+Predictions can have missing corners, misplaced points or disconnected edges. An interactive viewer can display the wireframe. A full building model needs additional geometry for walls and other details.
 
 ## What changed in v2
 
@@ -52,11 +56,12 @@ v2/scripts/         Dataset preparation, mixed distillation and paired evaluatio
 v2/slurm/           Batch jobs that run without an active laptop connection
 v2/evaluation/      Controlled v1/v2 comparisons on Alex
 v2/provenance/      Split IDs, source hashes, runtime and original Alex files
+v3/                 Aerial image and footprint to geometry experiment
 docs/               Evaluation and source-transfer notes
 tools/              Source-transfer utilities
 ```
 
-The server directory name can be `Koor-building-reconstruction-v2`; the Git repository contains both versioned source trees. Shared model code stays in `v1/Point2Roof`. The [v2 guide](v2/README.md#code-and-experiment-records) explains how the cleaned layout relates to the original Alex checkpoint paths.
+The server directory name can be `Koor-building-reconstruction-v2`. The [v2 guide](v2/README.md#code-and-experiment-records) explains how the repository layout relates to the original Alex checkpoint paths.
 
 ## Credit where it's due
 
