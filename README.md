@@ -41,6 +41,12 @@ V2's reported checkpoint is epoch 14, selected on validation before test evaluat
 
 The [v2 guide](v2/README.md#held-out-results) has every tolerance and the [full reports](v2/evaluation/) include precision, recall, macro-F1 and failure counts. The [evaluation notes](docs/results.md) explain the scoring and its limits. These are Koor evaluations on a custom Building3D holdout, not published benchmark reproductions. V1's original B200 reports are preserved separately.
 
+## Inference results
+
+V1 and v2 produced roof wireframes for the same 10 Building3D holdout point clouds. Each folder contains predictions in JSON and OBJ. [V1 inference results](v1/results/) · [V2 inference results](v2/results/)
+
+V3 produced **no valid meshes on the 10 buildings tested** from the 3DBAG/PDOK geographic test split. All 10 generations reached the 4,096-token cap. The results include the raw predictions and the reason each failed validation. [V3 inference results](v3/results/)
+
 ## Try it or train it
 
 Start with the [v1 guide](v1/README.md) to try the published weights and procedural demo. Use the [v2 guide](v2/README.md) for mixed training, deterministic replay, checkpoint/resume testing and Slurm jobs on Alex.
