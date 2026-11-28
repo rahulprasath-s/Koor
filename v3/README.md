@@ -4,6 +4,10 @@ I wanted to see whether an aerial photo and a footprint are enough to reconstruc
 
 The current pilot learns a JSON object with a `triangles_mm` field. Each triangle has nine integers for three XYZ points in local Y-up coordinates. The converter checks the geometry, assigns vertex indices, and writes the Three.js module. A reference GLB round-trip verified that the conversion preserves the reference shape to millimetre rounding precision. Measuring the accuracy of generated geometry on the geographic holdout comes after training.
 
+## Published adapter
+
+The public release contains the step-98 PEFT LoRA adapter from one epoch of JSON geometry training on SECE. Load it with Qwen3-VL-2B-Instruct at revision `89644892e4d85e24eaac8bacfd4f463576704203`. The model card accompanies `adapter_config.json` and `adapter_model.safetensors`. Held-out mesh quality has yet to be measured for this checkpoint. [Koor v3 adapter on Hugging Face](https://huggingface.co/Uruva/Koor-aerial-reconstruction-v3)
+
 ## Dataset and scripts
 
 The pilot pairs 1,000 Dutch building meshes from 3DBAG with georeferenced 2024 PDOK aerial crops. Each sample includes a footprint mask, reference GLB, Three.js module, and metadata. Geographic splits contain 797 train, 94 validation, and 99 test buildings. The split procedure excludes 10 examples in geographic buffers. The JSON pilot uses the 782 training examples whose full input and target fit in 8,192 tokens.
