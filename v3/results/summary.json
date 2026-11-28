@@ -1,0 +1,115 @@
+{
+  "model": "Uruva/Koor-aerial-reconstruction-v3",
+  "gpu": "NVIDIA B200",
+  "selection_seed": 42,
+  "completed": 10,
+  "requested": 10,
+  "base_revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+  "split": "3DBAG/PDOK geographic test",
+  "adapter_sha256": "040e2642cc223fe52be93b887bc5e6824c9845969779b395e6cd7ea7d38527e0",
+  "manifest_sha256": "798e6a2dd0b8be59bd2da608d662832e3a18c43be2b02752047ac2a79e9aec2b",
+  "max_new_tokens": 4096,
+  "decoding": "greedy",
+  "samples": [
+    {
+      "building_id": "NL.IMBAG.Pand.1655100000489820",
+      "raw_output": "01-NL.IMBAG.Pand.1655100000489820.txt",
+      "new_tokens": 4096,
+      "ended_with_eos": false,
+      "reached_token_budget": true,
+      "reference_glb": "buildings/NL.IMBAG.Pand.1655100000489820/building.glb",
+      "status": "invalid_geometry",
+      "reason": "Expecting ',' delimiter: line 1 column 4674 (char 4673)"
+    },
+    {
+      "building_id": "NL.IMBAG.Pand.0840100000278936",
+      "raw_output": "02-NL.IMBAG.Pand.0840100000278936.txt",
+      "new_tokens": 4096,
+      "ended_with_eos": false,
+      "reached_token_budget": true,
+      "reference_glb": "buildings/NL.IMBAG.Pand.0840100000278936/building.glb",
+      "status": "invalid_geometry",
+      "reason": "Expecting ',' delimiter: line 1 column 4613 (char 4612)"
+    },
+    {
+      "building_id": "NL.IMBAG.Pand.0840100000276100",
+      "raw_output": "03-NL.IMBAG.Pand.0840100000276100.txt",
+      "new_tokens": 4096,
+      "ended_with_eos": false,
+      "reached_token_budget": true,
+      "reference_glb": "buildings/NL.IMBAG.Pand.0840100000276100/building.glb",
+      "status": "invalid_geometry",
+      "reason": "Expecting ',' delimiter: line 1 column 4691 (char 4690)"
+    },
+    {
+      "building_id": "NL.IMBAG.Pand.1655100000489861",
+      "raw_output": "04-NL.IMBAG.Pand.1655100000489861.txt",
+      "new_tokens": 4096,
+      "ended_with_eos": false,
+      "reached_token_budget": true,
+      "reference_glb": "buildings/NL.IMBAG.Pand.1655100000489861/building.glb",
+      "status": "invalid_geometry",
+      "reason": "Expecting ',' delimiter: line 1 column 4691 (char 4690)"
+    },
+    {
+      "building_id": "NL.IMBAG.Pand.0840100000281083",
+      "raw_output": "05-NL.IMBAG.Pand.0840100000281083.txt",
+      "new_tokens": 4096,
+      "ended_with_eos": false,
+      "reached_token_budget": true,
+      "reference_glb": "buildings/NL.IMBAG.Pand.0840100000281083/building.glb",
+      "status": "invalid_geometry",
+      "reason": "Expecting value: line 1 column 4671 (char 4670)"
+    },
+    {
+      "building_id": "NL.IMBAG.Pand.0840100000279283",
+      "raw_output": "06-NL.IMBAG.Pand.0840100000279283.txt",
+      "new_tokens": 4096,
+      "ended_with_eos": false,
+      "reached_token_budget": true,
+      "reference_glb": "buildings/NL.IMBAG.Pand.0840100000279283/building.glb",
+      "status": "invalid_geometry",
+      "reason": "Expecting ',' delimiter: line 1 column 4613 (char 4612)"
+    },
+    {
+      "building_id": "NL.IMBAG.Pand.0840100000279272",
+      "raw_output": "07-NL.IMBAG.Pand.0840100000279272.txt",
+      "new_tokens": 4096,
+      "ended_with_eos": false,
+      "reached_token_budget": true,
+      "reference_glb": "buildings/NL.IMBAG.Pand.0840100000279272/building.glb",
+      "status": "invalid_geometry",
+      "reason": "Expecting ',' delimiter: line 1 column 4691 (char 4690)"
+    },
+    {
+      "building_id": "NL.IMBAG.Pand.0840100000278940",
+      "raw_output": "08-NL.IMBAG.Pand.0840100000278940.txt",
+      "new_tokens": 4096,
+      "ended_with_eos": false,
+      "reached_token_budget": true,
+      "reference_glb": "buildings/NL.IMBAG.Pand.0840100000278940/building.glb",
+      "status": "invalid_geometry",
+      "reason": "Expecting ',' delimiter: line 1 column 4523 (char 4522)"
+    },
+    {
+      "building_id": "NL.IMBAG.Pand.0840100000278932",
+      "raw_output": "09-NL.IMBAG.Pand.0840100000278932.txt",
+      "new_tokens": 4096,
+      "ended_with_eos": false,
+      "reached_token_budget": true,
+      "reference_glb": "buildings/NL.IMBAG.Pand.0840100000278932/building.glb",
+      "status": "invalid_geometry",
+      "reason": "Expecting ',' delimiter: line 1 column 4613 (char 4612)"
+    },
+    {
+      "building_id": "NL.IMBAG.Pand.1655100000489825",
+      "raw_output": "10-NL.IMBAG.Pand.1655100000489825.txt",
+      "new_tokens": 4096,
+      "ended_with_eos": false,
+      "reached_token_budget": true,
+      "reference_glb": "buildings/NL.IMBAG.Pand.1655100000489825/building.glb",
+      "status": "invalid_geometry",
+      "reason": "Expecting ',' delimiter: line 1 column 4523 (char 4522)"
+    }
+  ]
+}

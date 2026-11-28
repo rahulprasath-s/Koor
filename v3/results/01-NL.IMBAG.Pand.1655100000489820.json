@@ -1,0 +1,10 @@
+{
+  "building_id": "NL.IMBAG.Pand.1655100000489820",
+  "raw_output": "01-NL.IMBAG.Pand.1655100000489820.txt",
+  "new_tokens": 4096,
+  "ended_with_eos": false,
+  "reached_token_budget": true,
+  "reference_glb": "buildings/NL.IMBAG.Pand.1655100000489820/building.glb",
+  "status": "invalid_geometry",
+  "reason": "Expecting ',' delimiter: line 1 column 4674 (char 4673)"
+}
