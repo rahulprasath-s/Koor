@@ -1,0 +1,94 @@
+{
+  "model": "Uruva/Koor-building-reconstruction-v2",
+  "gpu": "NVIDIA B200",
+  "selection_seed": 42,
+  "completed": 10,
+  "requested": 10,
+  "revision": "ba0daebb4579e0e9be224033715c90b49276b597",
+  "split": "Building3D spatial holdout",
+  "manifest_sha256": "5547f8f4ef9ff1f542b383d43950d85e367772975a4a174080a1d4ef821c3bd6",
+  "point_sampling_seed": 42,
+  "edge_threshold": 0.5,
+  "samples": [
+    {
+      "sample_id": "1554",
+      "status": "ok",
+      "vertices": 9,
+      "edges": 4,
+      "prediction_json": "01-1554.json",
+      "prediction_obj": "01-1554.obj"
+    },
+    {
+      "sample_id": "1327",
+      "status": "ok",
+      "vertices": 4,
+      "edges": 3,
+      "prediction_json": "02-1327.json",
+      "prediction_obj": "02-1327.obj"
+    },
+    {
+      "sample_id": "33044",
+      "status": "ok",
+      "vertices": 8,
+      "edges": 5,
+      "prediction_json": "03-33044.json",
+      "prediction_obj": "03-33044.obj"
+    },
+    {
+      "sample_id": "2527",
+      "status": "ok",
+      "vertices": 6,
+      "edges": 1,
+      "prediction_json": "04-2527.json",
+      "prediction_obj": "04-2527.obj"
+    },
+    {
+      "sample_id": "2279",
+      "status": "ok",
+      "vertices": 4,
+      "edges": 4,
+      "prediction_json": "05-2279.json",
+      "prediction_obj": "05-2279.obj"
+    },
+    {
+      "sample_id": "16453",
+      "status": "ok",
+      "vertices": 11,
+      "edges": 7,
+      "prediction_json": "06-16453.json",
+      "prediction_obj": "06-16453.obj"
+    },
+    {
+      "sample_id": "15119",
+      "status": "ok",
+      "vertices": 6,
+      "edges": 7,
+      "prediction_json": "07-15119.json",
+      "prediction_obj": "07-15119.obj"
+    },
+    {
+      "sample_id": "9666",
+      "status": "ok",
+      "vertices": 7,
+      "edges": 1,
+      "prediction_json": "08-9666.json",
+      "prediction_obj": "08-9666.obj"
+    },
+    {
+      "sample_id": "14969",
+      "status": "ok",
+      "vertices": 6,
+      "edges": 7,
+      "prediction_json": "09-14969.json",
+      "prediction_obj": "09-14969.obj"
+    },
+    {
+      "sample_id": "5269",
+      "status": "ok",
+      "vertices": 6,
+      "edges": 7,
+      "prediction_json": "10-5269.json",
+      "prediction_obj": "10-5269.obj"
+    }
+  ]
+}
