@@ -16,17 +16,20 @@ The pilot pairs 1,000 Dutch building meshes from 3DBAG with georeferenced 2024 P
 - `building_geometry_target.py` tests reference GLB conversion. `prepare_qwen_geometry_targets.py` builds and audits the training targets.
 - `train_qwen_building_pilot.py` trains the adapter and saves resumable checkpoints. `evaluate_qwen_building.py` and `retry_qwen_building_mesh.py` reproduce the earlier direct Three.js experiment.
 
-See the [dataset card](DATASET_CARD.md) for attribution, data changes, and coverage.
+The public release contains `shard-1000/` and `geometry-training-8192/`. Keep these directories beside each other so the manifest paths resolve. The geometry directory contains all 797 training targets, with separate manifests for the 782 that fit the 8,192-token cap and the 15 that exceed it. [Koor v3 dataset on Hugging Face](https://huggingface.co/datasets/Uruva/Koor-v3-3DBAG-PDOK)
+
+See the [dataset card](DATASET_CARD.md) for 3DBAG and PDOK credits, data changes, and coverage.
 
 ## Run the JSON pilot
 
 Use Python 3.12 and a CUDA-enabled PyTorch installation with matching torchvision. On SECE the environment used PyTorch 2.14.1+cu132, torchvision 0.29.1+cu132, Transformers 4.57.6 and PEFT 0.18.1. Install the remaining dependencies with `python -m pip install -r v3/requirements.txt`.
 
-From the repository root, set `SHARD` to your paired data directory and keep the prepared geometry folder beside it so the manifest paths work on both Mac and SECE:
+From the repository root, set `SHARD` to your paired data directory. If you downloaded the public release, use its existing audited targets and skip the preparation command.
 
 ```bash
 SHARD="$HOME/Koor-building-code-dataset/data/3dbag/shard-1000"
 TARGETS="$(dirname "$SHARD")/geometry-training-8192"
+# Run target preparation only if TARGETS has not already been created.
 python v3/scripts/prepare_qwen_geometry_targets.py "$SHARD" --output "$TARGETS"
 python -u v3/scripts/train_qwen_building_pilot.py "$SHARD" \
   --geometry-targets "$TARGETS" \
@@ -34,4 +37,4 @@ python -u v3/scripts/train_qwen_building_pilot.py "$SHARD" \
   --epochs 1 --accumulate 8 --save-every 10
 ```
 
-Use an existing audited target directory directly if it is already available. The trainer starts with the pinned Qwen3-VL-2B-Instruct base weights. It supervises the JSON and assistant end token, masking the image and prompt tokens. With these settings, it checkpoints at step 1, every 10 optimizer steps, and at the final step 98. Append `--resume` to resume the same run with its original settings.
+The trainer starts with the pinned Qwen3-VL-2B-Instruct base weights. It supervises the JSON and assistant end token, masking the image and prompt tokens. With these settings, it checkpoints at step 1, every 10 optimizer steps, and at the final step 98. Append `--resume` to resume the same run with its original settings.
