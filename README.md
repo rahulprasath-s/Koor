@@ -14,6 +14,8 @@ Koor uses the [Point2Roof architecture](https://github.com/Li-Li-Whu/Point2Roof)
 
 For v3, I'm trying to reconstruct a building from an aerial photo and a footprint mask. The model learns to output triangle geometry in JSON, which a small converter turns into a Three.js mesh. The [v3 guide](v3/README.md) covers the Dutch building dataset, the LoRA pilot, and what still needs to be measured.
 
+**[V3 LoRA adapter on Hugging Face](https://huggingface.co/Uruva/Koor-aerial-reconstruction-v3)** · **[V3 dataset on Hugging Face](https://huggingface.co/datasets/Uruva/Koor-v3-3DBAG-PDOK)**
+
 ## What v1 and v2 do
 
 Give Koor a point cloud for one building roof. It predicts corners, refines their positions and decides which corners should be connected. The output is a **3D roof wireframe**.
